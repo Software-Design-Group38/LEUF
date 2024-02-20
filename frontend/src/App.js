@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const Home = lazy(() => import('./Pages/home/Home'));
 const FuelForm = lazy(() => import('./Pages/fuelForm/FuelForm'));
-const CreateAccount = lazy(() => import('./Pages/createAcc/CreateAcc'));
+const Login = lazy(() => import('./Pages/login/Login'));
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/fuelform" element={<FuelForm />}/>
-        <Route path="/createacc" element={<CreateAccount />}/>
+        <Route path="/login" element={<Login />}/>
       </Routes>
   </Router>
   );
