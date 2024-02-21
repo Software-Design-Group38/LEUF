@@ -7,6 +7,11 @@ const Login = () => {
     setCreate(!create)
   }
 
+  const [show, setShow] = useState(true)
+  const handleShowPW = () => {
+    setShow(!show)
+  }
+
   const {register, handleSubmit, formState: {errors} } = useForm()
 
   const onSubmit = (data) => {
@@ -20,8 +25,8 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <h1 class="text-center">Login</h1>
             <div class="mt-3">
-                <label for="username" class="block text-base mb-2">Username</label>
-                <input type="text" id="username" class="border w-full" placeholder="Enter Username..."
+                <label for="username" class="block text-base font-bold mb-2">Username</label>
+                <input type="text" id="username" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Username..."
                   {...register('username', {
                     required: "Username is required",
                     minLength: {
@@ -34,9 +39,9 @@ const Login = () => {
                   <p class="text-xs italic text-red-500">{errors.username.message}</p>
                 )}
             </div>
-            <div class="mt-3">
-                <label for="password" class="block text-base mb-2">Password</label>
-                <input type="text" id="password" class="border w-full" placeholder="Enter Password..."
+            <div class="relative mt-3">
+                <label for="password" class="block text-base font-bold mb-2">Password</label>
+                <input type={show ? "password" : "text"} id="password" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Password..."
                   {...register('password', {
                     required: "Password is required",
                     minLength: {
@@ -48,13 +53,17 @@ const Login = () => {
                 {errors.password && (
                   <p class="text-xs italic text-red-500">{errors.password.message}</p>
                 )}
+              {/*}  <div class="absolute bottom-1 right-0 pr-3 flex items-center text-sm">
+                  <svg class={show ? "h-8 w-8 text-gray-700" : "hidden"} onClick={handleShowPW} viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />  <circle cx="12" cy="12" r="3" /></svg>
+                  <svg class={show ? "hidden" :"h-8 w-8 text-gray-700"} onClick={handleShowPW} viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />  <line x1="1" y1="1" x2="23" y2="23" /></svg>
+                </div>*/}
             </div>
             <div class="mt-5">
-                <button type="submit" class="w-full rounded-md hover:bg-gray-500 hover:text-white">Login</button>
+                <button type="submit" class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Login</button>
             </div>
           </form>
             <div class="mt-5">
-                <button onClick={handleCreate} class="w-full rounded-md hover:bg-gray-500 hover:text-white">Don't have an account? Sign up</button>
+                <button onClick={handleCreate} class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Don't have an account? Sign up</button>
             </div>
         </div>
 
@@ -73,8 +82,8 @@ const Login = () => {
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label for="SUusername" class="block text-base mb-2">Username</label>
-                    <input type="text" id="SUusername" class="border w-full" placeholder="Enter Username..."
+                    <label for="SUusername" class="block text-base font-bold mb-2">Username</label>
+                    <input type="text" id="SUusername" class="shadow appearance-none border rounded py-2 px-3 w-full" placeholder="Enter Username..."
                       {...register('SUusername', {
                         required: "Username is required",
                         minLength: {
@@ -88,8 +97,8 @@ const Login = () => {
                     )}
                 </div>
                 <div class="mt-3">
-                    <label for="SUpassword" class="block text-base mb-2">Password</label>
-                    <input type="text" id="SUpassword" class="border w-full" placeholder="Enter Password..."
+                    <label for="SUpassword" class="block text-base font-bold mb-2">Password</label>
+                    <input type={show ? "password" : "text"} id="SUpassword" class="shadow appearance-none border rounded py-2 px-3 w-full" placeholder="Enter Password..."
                       {...register('SUpassword', {
                         required: "Password is required",
                         minLength: {
@@ -103,10 +112,10 @@ const Login = () => {
                     )}
                 </div>
                 <div class="mt-5">
-                    <button type="submit" class="w-full rounded-md hover:bg-gray-500 hover:text-white">Sign up</button>
+                    <button type="submit" class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Sign up</button>
                 </div>
                 <div class="mt-5">
-                    <button onClick={handleCreate} class="w-full rounded-md hover:bg-gray-500 hover:text-white">Already have an account? Log in</button>
+                    <button onClick={handleCreate} class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Already have an account? Log in</button>
                 </div>
             </form>
         </div>
