@@ -1,9 +1,23 @@
 import React, {useState} from 'react'
 
 const History = () => {
+  const [fuelQuotes, setFuelQuotes] = useState([]);
   return (
-    <div>History</div>
-  )
-}
+    <div>
+      <h2>Fuel Quote History</h2>
+      <ul>
+        {fuelQuotes.map((quote, index) => (
+          <li key={index}>
+            {/*Display quote details*/}
+            Gallons Requested: {quote.gallonsRequested}, Delivery Date: {quote.deliveryDate}, Total Amount Due: {quote.totalAmountDue.toFixed(2)}
+          </li>
+        ))}
+      </ul>
+      {/*Should this be a link back to fuel form or home or two links? */}
+      <Link to="/fuelform">Back to Fuel Form</Link>
+      <Link to="/home">Back to Home</Link>
+    </div>
+  );
+};
 
 export default History
