@@ -1,12 +1,19 @@
 import React, {useState} from 'react'
 import {BsPerson} from 'react-icons/bs'
 import {AiOutlineClose} from 'react-icons/ai'
+import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
   const [nav, setNav] = useState(false)
   const handleNav = () => {
     setNav(!nav)
   }
+
+  const disableNav = ['/login', '/profile']
+
+  const {pathname} = useLocation();
+
+  if (pathname === '/login') return null
 
   return (
     <div className='flex border-b-2 border-black h-20 px-4 sticky top-0 z-40 bg-white'>
@@ -15,8 +22,8 @@ const Navbar = () => {
                 <h1>FUEL</h1>
             </div>
             <ul className='flex'>
-                <li>Fuel Quote Form</li>
-                <li>Fuel Quote History</li>
+                <li><a href='#fuelform' onClick={()=>{window.location.replace('/fuelform')}}>Fuel Quote Form</a></li>
+                <li><a href='#history' onClick={()=>{window.location.replace('/history')}}>Fuel Quote History</a></li>
             </ul>
         </div>
         
@@ -28,10 +35,10 @@ const Navbar = () => {
             </div>
             <div className={nav ? 'absolute right-0 top-20 bg-gray-100/90 rounded-md px-4 py-7 flex flex-col' : 'hidden'}>
                 <div className='flex flex-col mt-10 mb-5'>
-                    <button>Manage Account</button>
+                    <button onClick={()=>{window.location.replace('/profile')}}>Manage Account</button>
                 </div>
                 <div className='flex flex-col'>
-                    <button>Logout</button>
+                    <button onClick={()=>{window.location.replace('/login')}}>Logout</button>
                 </div>
             </div>
         </div>

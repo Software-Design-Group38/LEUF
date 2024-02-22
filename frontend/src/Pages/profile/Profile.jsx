@@ -139,9 +139,7 @@ const Profile = () => {
                     name="state"
                     value={selectedState}
                     onChange={handleChange}
-                /*    {...register('state', {
-                        required: "State is required",
-                      })}*/
+                    required='required'
                     className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                 <option value="">Select a state</option>
@@ -149,13 +147,10 @@ const Profile = () => {
                     <option key={state.name} value={state.name}>{state.fullName}</option>
                     ))}
                 </select>
-                {errors.state && (
-                  <p class="text-xs italic text-red-500">{errors.state.message}</p>
-                )}
             </div>            
             
             <div class="mt-5">
-                <button type="submit" class="w-full rounded-md hover:bg-gray-500 hover:text-white">Submit</button>
+                <button type="submit" class="w-full rounded-md hover:bg-gray-500 hover:text-white">Save</button>
             </div>
           </form>
         </div>

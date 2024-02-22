@@ -19,11 +19,12 @@ const Login = () => {
 	}
 
   return (
-    <div class="flex justify-center items-center h-screen">
+    <div class="flex justify-center items-center h-screen flex-col">
         {/* Login Popup; create=false*/}
+        <h1>FUEL</h1>
         <div class={create ? "hidden" : "w-96 p-6 shadow-lg bg-white rounded-md"}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h1 class="text-center">Login</h1>
+            <h2 class="text-center">Login</h2>
             <div class="mt-3">
                 <label for="username" class="block text-base font-bold mb-2">Username</label>
                 <input type="text" id="username" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Username..."
@@ -69,7 +70,7 @@ const Login = () => {
 
         {/* Sign Up Popup; create=true */}
         <div class={create ? "w-96 p-6 shadow-lg bg-white rounded-md" : "hidden"}>
-            <h1 class="text-center">Sign Up</h1>
+            <h2 class="text-center">Sign Up</h2>
             <div>
               <ul>
                 <li class="text-xs mt-4 p-0">Username requirements:</li>
