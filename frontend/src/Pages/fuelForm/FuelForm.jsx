@@ -4,6 +4,12 @@ const FuelForm = () => {
   // State variables to manage form data
   const [gallonsRequested, setGallonsRequested] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
+  const [fuelQuotes, setFuelQuotes] = useState('');
+
+  //Add fuel quote to state to store in history
+  const addFuelQuote = (fuelQuote) => {
+    setFuelQuotes([...fuelQuotes, fuelQuote]);
+  };
   
   // Function to handle form submission
   const handleSubmit = (event) => {
@@ -13,6 +19,16 @@ const FuelForm = () => {
     const suggestedPricePerGallon = 2.50; // Example suggested price per gallon
     const totalAmountDue = parseFloat(gallonsRequested) * suggestedPricePerGallon;
 
+    //Construct fuel quote object
+    const fuelQuote = {
+      gallonsRequested: parseFloat(gallonsRequested),
+      deliveryDate: deliveryDate,
+      totalAmountDue: totalAmountDue
+    };
+    
+    //Add fuel quote to state
+    addFuelQuote(fuelQuote);
+    
     // Display total amount due 
     console.log('Total Amount Due:', totalAmountDue);
   };
