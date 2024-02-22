@@ -4,7 +4,7 @@ const FuelForm = () => {
   // State variables to manage form data
   const [gallonsRequested, setGallonsRequested] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
-  const [fuelQuotes, setFuelQuotes] = useState('');
+  const [fuelQuotes, setFuelQuotes] = useState([]);
 
   //Add fuel quote to state to store in history
   const addFuelQuote = (fuelQuote) => {
