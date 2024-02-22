@@ -74,8 +74,8 @@ const Profile = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <h1 class="text-center">Account Information</h1>
             <div class="mt-3">
-                <label for="name" class="block text-base mb-2">Full Name</label>
-                <input type="text" id="name" class="border w-full" placeholder="Enter Your Name..." maxLength={50} pattern="[A-Za-z]*" title="Please enter only alphabetical characters" 
+                <label for="name" class="block text-base font-bold mb-2">Full Name</label>
+                <input type="text" id="name" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Your Name..." maxLength={50} pattern="[A-Za-z]*" title="Please enter only alphabetical characters" 
                   {...register('name', {
                     required: "Name is required",
                   })}
@@ -85,8 +85,8 @@ const Profile = () => {
                 )}
             </div>
             <div class="mt-3">
-                <label for="address1" class="block text-base mb-2">Address 1</label>
-                <input type="text" id="address1" class="border w-full" placeholder="Enter Address..." maxLength={100}
+                <label for="address1" class="block text-base font-bold mb-2">Address 1</label>
+                <input type="text" id="address1" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Address..." maxLength={100}
                   {...register('address1', {
                     required: "Address is required",
                   })}
@@ -96,8 +96,8 @@ const Profile = () => {
                 )}
             </div>
             <div class="mt-3">
-                <label for="address2" class="block text-base mb-2">Address 2</label>
-                <input type="text" id="address1" class="border w-full" placeholder="Enter Address..." maxLength={100}
+                <label for="address2" class="block text-base font-bold mb-2">Address 2 (optional)</label>
+                <input type="text" id="address1" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Address..." maxLength={100}
                   {...register('address2', {
                   })}
                 />
@@ -106,8 +106,8 @@ const Profile = () => {
                 )}
             </div>
             <div class="mt-3">
-                <label for="city" class="block text-base mb-2">City</label>
-                <input type="text" id="city" class="border w-full" placeholder="Enter City..." maxLength={100}
+                <label for="city" class="block text-base font-bold mb-2">City</label>
+                <input type="text" id="city" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter City..." maxLength={100}
                   {...register('city', {
                     required: "City is required",
                   })}
@@ -117,8 +117,8 @@ const Profile = () => {
                 )}
             </div>
             <div class="mt-3">
-                <label for="zipcode" class="block text-base mb-2">Zipcode</label>
-                <input type="text" id="zipcode" class="border w-full" placeholder="Enter Zipcode..." maxLength={9} pattern="[0-9]*" title="Please enter only numeric characters" 
+                <label for="zipcode" class="block text-base font-bold mb-2">Zipcode</label>
+                <input type="text" id="zipcode" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Zipcode..." maxLength={9} pattern="[0-9]*" title="Please enter only numeric characters" 
                   {...register('zipcode', {
                     required: "Zipcode is required",
                     minLength: {
@@ -132,8 +132,8 @@ const Profile = () => {
                 )}
             </div>
             
-            <div className="w-full max-w-xs">
-                <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
+            <div className="w-full mt-3">
+                <label htmlFor="state" className="block text-base font-bold">State</label>
                 <select
                     id="state"
                     name="state"
