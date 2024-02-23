@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const History = () => {
   const [fuelQuotes, setFuelQuotes] = useState([]);
   return (
-    <div>
+    <div className='h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]'>
       <h2>Fuel Quote History</h2>
       <ul>
         {fuelQuotes.map((quote, index) => (

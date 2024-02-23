@@ -34,7 +34,7 @@ const FuelForm = () => {
   };
 
   return (
-    <div>
+    <div className='h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]'>
       <h2>Fuel Quote Form</h2>
       <form onSubmit={handleSubmit}>
         <div>

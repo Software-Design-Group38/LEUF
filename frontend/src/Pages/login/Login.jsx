@@ -19,9 +19,9 @@ const Login = () => {
 	}
 
   return (
-    <div class="flex justify-center items-center h-screen flex-col">
+    <div class="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
         {/* Login Popup; create=false*/}
-        <h1>FUEL</h1>
+        <h1 class="pb-2">LEÜF</h1>
         <div class={create ? "hidden" : "w-96 p-6 shadow-lg bg-white rounded-md"}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2 class="text-center">Login</h2>

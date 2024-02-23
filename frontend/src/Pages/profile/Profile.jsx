@@ -69,7 +69,7 @@ const Profile = () => {
       }
   
   return (
-    <div class="flex justify-center items-center h-screen">
+    <div class="flex justify-center items-center h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
         <div class="w-96 p-6 shadow-lg bg-white rounded-md">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h1 class="text-center">Account Information</h1>
