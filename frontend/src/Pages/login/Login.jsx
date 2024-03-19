@@ -1,7 +1,14 @@
 import React, {useState} from 'react'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
+
+  const navigate = useNavigate()
+
   const [create, setCreate] = useState(false)
   const handleCreate = () => {
     setCreate(!create)
@@ -10,24 +17,38 @@ const Login = () => {
   const [show, setShow] = useState(true)
   const handleShowPW = () => {
     setShow(!show)
-  }
+  } 
 
   const {register, handleSubmit, formState: {errors} } = useForm()
 
-  const onSubmit = (data) => {
-		console.log(data);
+  const handleLogin = (e) => {
+    axios.post('http://localhost:3000/login', {username, password})
+    .then(result => {
+      console.log(result)
+      navigate("/")
+    })
+    .catch(err => console.log(err))
 	}
+
+  const handleRegister = (e) => {
+    axios.post('http://localhost:3000/register', {username, password})
+    .then(result => {
+      console.log(result)
+      navigate("/profile")
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <div class="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
         {/* Login Popup; create=false*/}
         <h1 class="pb-2">LEÜF</h1>
         <div class={create ? "hidden" : "w-96 p-6 shadow-lg bg-white rounded-md"}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleLogin)}>
             <h2 class="text-center">Login</h2>
             <div class="mt-3">
                 <label for="username" class="block text-base font-bold mb-2">Username</label>
-                <input type="text" id="username" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Username..."
+                <input type="text" id="username" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Username..." onChange={(data) => setUsername(data.target.value)}
                   {...register('username', {
                     required: "Username is required",
                     minLength: {
@@ -42,7 +63,7 @@ const Login = () => {
             </div>
             <div class="relative mt-3">
                 <label for="password" class="block text-base font-bold mb-2">Password</label>
-                <input type={show ? "password" : "text"} id="password" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Password..."
+                <input type={show ? "password" : "text"} id="password" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Password..." onChange={(data) => setPassword(data.target.value)}
                   {...register('password', {
                     required: "Password is required",
                     minLength: {
@@ -81,10 +102,10 @@ const Login = () => {
                 <li class="list-disc text-xs ml-4 mb-2 p-0">A minimum of 8 characters</li>
               </ul>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleRegister)}>
                 <div>
                     <label for="SUusername" class="block text-base font-bold mb-2">Username</label>
-                    <input type="text" id="SUusername" class="shadow appearance-none border rounded py-2 px-3 w-full" placeholder="Enter Username..."
+                    <input type="text" id="SUusername" class="shadow appearance-none border rounded py-2 px-3 w-full" placeholder="Enter Username..." onChange={(data) => setUsername(data.target.value)}
                       {...register('SUusername', {
                         required: "Username is required",
                         minLength: {
@@ -99,7 +120,7 @@ const Login = () => {
                 </div>
                 <div class="mt-3">
                     <label for="SUpassword" class="block text-base font-bold mb-2">Password</label>
-                    <input type={show ? "password" : "text"} id="SUpassword" class="shadow appearance-none border rounded py-2 px-3 w-full" placeholder="Enter Password..."
+                    <input type={show ? "password" : "text"} id="SUpassword" class="shadow appearance-none border rounded py-2 px-3 w-full" placeholder="Enter Password..." onChange={(data) => setPassword(data.target.value)}
                       {...register('SUpassword', {
                         required: "Password is required",
                         minLength: {

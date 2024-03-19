@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const {pathname} = useLocation();
 
-  if (pathname === '/login') return null
+  if (pathname === '/login' || pathname === '/register') return null
 
   return (
     <div className='flex h-20 px-4 sticky top-0 z-40 bg-gradient-to-t from-[#E4E7E4] to-[#A6B2B8]'>
