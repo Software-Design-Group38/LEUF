@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import { Input, Button, Typography } from "@material-tailwind/react";
 
 const Login = () => {
   const [username, setUsername] = useState("")
@@ -11,6 +12,13 @@ const Login = () => {
   const [create, setCreate] = useState(false)
   const handleCreate = () => {
     setCreate(!create)
+    setUsername("")
+    setPassword("")
+  }
+
+  const [showPW, setShowPW] = useState(true)
+  const handleShowPW = () => {
+    setShowPW(!showPW)
   }
 
   const handleLogin = (e) => {
@@ -33,104 +41,122 @@ const Login = () => {
     .catch(err => console.log(err))
   }
 
-  const handleH = (e) => {
+  // Testing to see if username and password are passed/updating correctly
+  /*const handleH = (e) => {
     e.preventDefault()
     console.log(username + " " + password)
-  }
+  }*/
 
   return (
     <div class="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
         {/* Login Popup; create=false*/}
-        <h1 class="pb-2">LEÜF</h1>
-        <div class={create ? "hidden" : "w-96 p-6 shadow-lg bg-white rounded-md"}>
-          <form onSubmit={handleLogin}>
-            <h2 class="text-center">Login</h2>
-            <div class="mt-3">
-                <label for="username" class="block text-base font-bold mb-2">Username</label>
-                <input
-                  type="text"
-                  id="username"
-                  class="shadow appearance-none border py-2 px-3 rounded w-full"
-                  minLength={4}
-                  maxLength={20}
-                  required
-                  placeholder="Enter Username..."
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div class="relative mt-3">
-                <label for="password" class="block text-base font-bold mb-2">Password</label>
-                <input
-                  type="password"
+        <Typography variant="h1" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>
+        <div class={"w-96 p-6 shadow-lg bg-white rounded-md"}>
+          <form onSubmit={create ? handleRegister : handleLogin}>
+            <div className="mb-1 flex flex-col gap-6">
+            <Typography variant="h3" color="blue-gray" className="text-center">{create ? "Sign Up" : "Login"}</Typography>
+                <div>
+                  <Input
+                    type="text"
+                    size="lg"
+                    variant="outlined"
+                    label="Username"
+                    id="username"
+                    minLength={4}
+                    maxLength={20}
+                    required
+                    placeholder="Enter Username..."
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <Typography
+                    variant="small"
+                    color="gray"
+                    className={`mt-2 flex items-center font-normal ${create ? '' : 'hidden'}`}
+                  >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="-mt-px h-4 w-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Must be at least 4 to 20 characters.
+                </Typography>
+                </div>
+                <div>
+                <Input
+                  type={showPW ? "password" : "text"}
+                  size="lg"
+                  variant="outlined"
                   id="password"
-                  class="shadow appearance-none border py-2 px-3 rounded w-full"
+                  label="Password"
                   minLength={8}
                   maxLength={30}
                   required
                   placeholder="Enter Password..."
+                  icon={<i className={`fa-solid fa-eye${showPW ? "-slash" : ""} cursor-pointer`} onClick={handleShowPW}/>}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-            </div>
-            <div class="mt-5">
-                <button type="submit" class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Login</button>
+                <Typography
+                  variant="small"
+                  color="gray"
+                  className={`mt-2 flex items-center font-normal ${create ? '' : 'hidden'}`}
+                >
+                  
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="-mt-px h-4 w-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Must be at least 8 to 30 characters.
+                </Typography></div>
+                <Button
+                  type="submit"
+                  color="white"
+                  size="lg"
+                  fullWidth
+                >{create ? "Sign up" : "Log in"}</Button>
             </div>
           </form>
             <div class="mt-5">
-                <button onClick={handleCreate} class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Don't have an account? Sign up</button>
+            <Typography color="gray" className="mt-4 text-center font-normal">
+              {create ? (
+                <>
+                  Already have an account?{" "}
+                  <span
+                    className="font-medium text-blue-600 cursor-pointer"
+                    onClick={handleCreate}
+                  >
+                    Log In
+                  </span>
+                </>
+              ) : (
+                <>
+                  Don't have an account?{" "}
+                  <span
+                    className="font-medium text-blue-600 cursor-pointer"
+                    onClick={handleCreate}
+                  >
+                    Sign Up
+                  </span>
+                </>
+              )}
+            </Typography>
             </div>
-        </div>
-
-        {/* Sign Up Popup; create=true */}
-        <div class={create ? "w-96 p-6 shadow-lg bg-white rounded-md" : "hidden"}>
-            <h2 class="text-center">Sign Up</h2>
-            <div>
-              <ul>
-                <li class="text-xs mt-4 p-0">Username requirements:</li>
-                <li class="list-disc text-xs ml-4 p-0">A minimum of 4 characters</li>
-                <li class="text-xs p-0">Password requirements:</li>
-                {/*<li class="list-disc text-xs ml-4 p-0">An alphabetic character</li>
-                <li class="list-disc text-xs ml-4 p-0">A numeric character</li>*/}
-                <li class="list-disc text-xs ml-4 mb-2 p-0">A minimum of 8 characters</li>
-              </ul>
-            </div>
-            <form onSubmit={handleRegister}>
-                <div>
-                    <label for="SUusername" class="block text-base font-bold mb-2">Username</label>
-                    <input
-                      type="text"
-                      id="SUusername"
-                      class="shadow appearance-none border rounded py-2 px-3 w-full"
-                      minLength={4}
-                      maxLength={20}
-                      required
-                      placeholder="Enter Username..."
-                      value={username}
-                      onChange={(data) => setUsername(data.target.value)}
-                    />
-                </div>
-                <div class="mt-3">
-                    <label for="SUpassword" class="block text-base font-bold mb-2">Password</label>
-                    <input
-                      type="password"
-                      id="SUpassword"
-                      class="shadow appearance-none border rounded py-2 px-3 w-full"
-                      minLength={8}
-                      maxLength={30}
-                      required
-                      placeholder="Enter Password..."
-                      value={password}
-                      onChange={(data) => setPassword(data.target.value)}
-                    />
-                </div>
-                <div class="mt-5">
-                    <button type="submit" class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Sign up</button>
-                </div>
-                <div class="mt-5">
-                    <button onClick={handleCreate} class="shadow appearance-none w-full rounded-md hover:bg-gray-500 hover:text-white">Already have an account? Log in</button>
-                </div>
-            </form>
         </div>
     </div>
   )
