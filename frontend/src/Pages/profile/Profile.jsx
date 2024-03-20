@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
-import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { useNavigate } from "react-router-dom"
+import { Input, Typography, Select, Option, Button } from "@material-tailwind/react"
 
 const states = [
     { name: "AL", fullName: "Alabama" },
@@ -55,102 +57,115 @@ const states = [
   ];
 
 const Profile = () => {
-    const {register, handleSubmit, formState: {errors} } = useForm()
+    const [name, setName] = useState("")
+    const [address1, setAddress1] = useState("")
+    const [address2, setAddress2] = useState("")
+    const [city, setCity] = useState("")
+    const [state, setState] = useState("")
+    const [zipcode, setZipcode] = useState("")
+    const navigate = useNavigate()
 
-    const onSubmit = (data) => {
-		console.log(data)
-	}
+    const onSubmit = (e) => {
+      e.preventDefault()
 
-    const [selectedState, setSelectedState] = useState('')
+      if (!state){
+        alert("Please select a State.")
+        return
+      }
+
+      const data = {
+        name: name,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        zipcode: zipcode
+      }
+      axios.put('http://localhost:3001/profile', data)
+      .then(result => {
+        console.log(result)
+        navigate("/")
+      })
+      .catch(err => console.log(err))
+	  }
 
     const handleChange = (e) => {
-        const selectedAbbreviation = e.target.value
-        setSelectedState(selectedAbbreviation)
-      }
+      console.log(e)
+      setState(e)
+    }
   
   return (
     <div class="flex justify-center items-center h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
-        <div class="w-96 p-6 shadow-lg bg-white rounded-md">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h1 class="text-center">Account Information</h1>
-            <div class="mt-3">
-                <label for="name" class="block text-base font-bold mb-2">Full Name</label>
-                <input type="text" id="name" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Your Name..." maxLength={50} pattern="[A-Za-z]*" title="Please enter only alphabetical characters" 
-                  {...register('name', {
-                    required: "Name is required",
-                  })}
-                />
-                {errors.name && (
-                  <p class="text-xs italic text-red-500">{errors.name.message}</p>
-                )}
-            </div>
-            <div class="mt-3">
-                <label for="address1" class="block text-base font-bold mb-2">Address 1</label>
-                <input type="text" id="address1" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Address..." maxLength={100}
-                  {...register('address1', {
-                    required: "Address is required",
-                  })}
-                />
-                {errors.address1 && (
-                  <p class="text-xs italic text-red-500">{errors.address1.message}</p>
-                )}
-            </div>
-            <div class="mt-3">
-                <label for="address2" class="block text-base font-bold mb-2">Address 2 (optional)</label>
-                <input type="text" id="address1" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Address..." maxLength={100}
-                  {...register('address2', {
-                  })}
-                />
-                {errors.address2 && (
-                  <p class="text-xs italic text-red-500">{errors.address2.message}</p>
-                )}
-            </div>
-            <div class="mt-3">
-                <label for="city" class="block text-base font-bold mb-2">City</label>
-                <input type="text" id="city" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter City..." maxLength={100}
-                  {...register('city', {
-                    required: "City is required",
-                  })}
-                />
-                {errors.city && (
-                  <p class="text-xs italic text-red-500">{errors.city.message}</p>
-                )}
-            </div>
-            <div class="mt-3">
-                <label for="zipcode" class="block text-base font-bold mb-2">Zipcode</label>
-                <input type="text" id="zipcode" class="shadow appearance-none border py-2 px-3 rounded w-full" placeholder="Enter Zipcode..." maxLength={9} pattern="[0-9]*" title="Please enter only numeric characters" 
-                  {...register('zipcode', {
-                    required: "Zipcode is required",
-                    minLength: {
-                      value: 5,
-                      message: 'Zipcode must be at least 5 characters',
-                    }, 
-                  })}
-                />
-                {errors.zipcode && (
-                  <p class="text-xs italic text-red-500">{errors.zipcode.message}</p>
-                )}
-            </div>
-            
-            <div className="w-full mt-3">
-                <label htmlFor="state" className="block text-base font-bold">State</label>
-                <select
-                    id="state"
-                    name="state"
-                    value={selectedState}
-                    onChange={handleChange}
-                    required='required'
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                <option value="">Select a state</option>
+        <div class="w-1/4 p-6 shadow-lg bg-white rounded-md">
+          <form onSubmit={onSubmit}>
+            <div className="mb-1 flex flex-col gap-4">
+              <Typography variant="h1" color="blue-gray" className="text-center">Account Information</Typography>
+              <Input
+                type="text"
+                id="name"
+                label="Full Name"
+                placeholder="Enter Your Name"
+                title="Alphabetic characters only"
+                size="lg"
+                maxLength={50}
+                pattern="[A-Za-z ]*"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Input
+                type="text"
+                id="address1"
+                label="Address 1"
+                placeholder="Enter Your Address"
+                size="lg"
+                required
+                value={address1}
+                onChange={(e) => setAddress1(e.target.value)}
+              />
+              <Input
+                type="text"
+                id="address2"
+                label="Address 2 (optional)"
+                placeholder="Enter Your Address"
+                size="lg"
+                value={address2}
+                onChange={(e) => setAddress2(e.target.value)}
+              />
+              <Input
+                type="text"
+                id="city"
+                label="City"
+                placeholder="Enter Your City"
+                size="lg"
+                required
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <Select
+                size="lg"
+                varaint="outlined"
+                label="State"
+                value={state}
+                onChange={(e) => setState(e)}
+              >
                 {states.map(state => (
-                    <option key={state.name} value={state.name}>{state.fullName}</option>
-                    ))}
-                </select>
-            </div>            
-            
-            <div class="mt-5">
-                <button type="submit" class="w-full rounded-md hover:bg-gray-500 hover:text-white">Save</button>
+                  <Option value={state.name}>
+                    {state.fullName}
+                  </Option>
+                ))}
+              </Select>
+              <Input
+                type="text"
+                id="zipcode"
+                label="Zipcode"
+                placeholder="Enter Your Zipcode"
+                size="lg"
+                required
+                value={zipcode}
+                onChange={(e) => setZipcode(e.target.value)}
+              />
+              <Button type="submit" size="lg" className="w-full">Save</Button>
             </div>
           </form>
         </div>
