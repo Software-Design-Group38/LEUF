@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
-import { Input, Button, Typography } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom"
+import { Input, Button, Typography } from "@material-tailwind/react"
 
 const Login = () => {
   const [username, setUsername] = useState("")
