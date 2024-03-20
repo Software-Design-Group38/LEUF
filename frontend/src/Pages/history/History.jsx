@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
-import { Card, Typography } from "@material-tailwind/react"
+import React, {startTransition, useState} from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { Card, Typography, Button } from "@material-tailwind/react"
 
 const TABLE_HEAD = ["Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
 
@@ -24,10 +24,18 @@ const TABLE_ROWS = [
 
 const History = () => {
   const [fuelQuotes, setFuelQuotes] = useState([])
+  const navigate = useNavigate()
+
+  const handleFuel = () => {
+    startTransition(() => {
+      navigate("/fuelform")
+    })
+  }
 
   return (
     <div className="h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
-      <div className="flex flex-col overflow-y-auto justify-center items-center">
+      <div className="flex flex-col overflow-y-auto justify-center items-center h-3/4 gap-3">
+        <Typography variant="h1" color="blue-gray" className="text-center">History</Typography>
         <Card className="h-3/4 w-3/4 overflow-scroll ">
           <table className="w-full min-w-max table-auto text-left">
             <thead>
@@ -78,6 +86,9 @@ const History = () => {
             </tbody>
           </table>
         </Card>
+        <a onClick={handleFuel}>
+          <Button variant="gradient">Back to Fuel Form?</Button>
+        </a>
       </div>
     </div>
   )
