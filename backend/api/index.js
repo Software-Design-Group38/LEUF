@@ -64,6 +64,7 @@ app.put("/profile", (req, res) => {
       state: req.body.state,
       zipcode: req.body.zipcode
     }
+    
     // Update profile in database and connect it to the username
     console.log(profileDoc)
     return res.status(200).json({ message: "Update successful" })
@@ -75,6 +76,29 @@ app.put("/profile", (req, res) => {
 })
 
 //app.use("/api/route", routers)
+
+app.post("/fuelform", async (req, res) => {
+  console.log(req.body)
+  try{
+    const {gallonsRequested, deliveryDate, totalAmountDue} = req.body.fuelQuote
+
+    const fuelDoc = {
+      gallonsRequested: gallonsRequested,
+      //address1: address1,
+      deliveryDate: deliveryDate,
+      totalAmountDue: totalAmountDue, 
+    }
+
+    //Save to database
+    console.log(fuelDoc)
+
+    return res.status(200).json({ message: "Fuel quote submitted successfully" })
+  }
+  catch (err){
+    console.error("Unable to submit fuel quote", err)
+    return res.status(500).json({ message: "Unable to submit fuel quote" })
+  }
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

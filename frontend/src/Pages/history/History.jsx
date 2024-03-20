@@ -1,81 +1,86 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
+import { Card, Typography } from "@material-tailwind/react"
+
+const TABLE_HEAD = ["Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
+
+// Example tests
+const TABLE_ROWS = [
+  {
+    requested: 24,
+    address: "12345 Test St",
+    date: "01/21/2024",
+    suggested: 2,
+    total: 25,
+  },
+  {
+    requested: 24,
+    address: "12345 Test St",
+    date: "02/13/2024",
+    suggested: 4,
+    total: 50,
+  },
+]
 
 const History = () => {
-  const [fuelQuotes, setFuelQuotes] = useState([]);
+  const [fuelQuotes, setFuelQuotes] = useState([])
 
   return (
-    <div className='h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]'>
+    <div className="h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
       <div className="flex flex-col overflow-y-auto justify-center items-center">
-        <h2 className='m-10'>Fuel Quote History</h2>
-        <div className="sm:-mx-6 lg:-mx-8">
-          <div className="inline-block py-2 sm:px-6 lg:px-8">
-            <div className="overflow-y-auto">
-              <table className="text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th scope="col" className="px-6 py-4">Gallons Requested</th>
-                    <th scope="col" className="px-6 py-4">Delivery Address</th>
-                    <th scope="col" className="px-6 py-4">Delivery Date</th>
-                    <th scope="col" className="px-6 py-4">Suggested Price / gallon</th>
-                    <th scope="col" className="px-6 py-4">Total Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b dark:border-neutral-500 hover:bg-neutral-100">
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                  </tr>
-                  <tr className="border-b dark:border-neutral-500 hover:bg-neutral-100">
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                  </tr>
-                  <tr className="border-b dark:border-neutral-500 hover:bg-neutral-100">
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                    <td className="whitespace-nowrap px-6 py-4">N/A</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <ul>
-          <li><a href='#fuelform' className='hover:text-white' onClick={()=>{window.location.replace('/fuelform')}}>Back to Fuel Quote Form</a></li>
-        </ul>
+        <Card className="h-3/4 w-3/4 overflow-scroll ">
+          <table className="w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {TABLE_ROWS.map(({ requested, address, date, suggested, total }, index) => (
+                <tr key={requested} className="even:bg-blue-gray-50/50">
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {requested}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {address}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {date}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {suggested}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {total}
+                    </Typography>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Card>
       </div>
-     {/* <div className='flex flex-col justify-center items-center'>
-        <h2 className='m-10'>Fuel Quote History</h2>
-        <div className='h-200 border-2 rounded-md'>
-          <ul className='flex flex-row'>
-            <li>Gallons Requested</li>
-            <li>Delivery Address</li>
-            <li>Delivery Date</li>
-            <li>Suggested Price / Gallon</li>
-            <li>Total Amount Due</li>
-            {fuelQuotes.map((quote, index) => (
-              <li key={index}>
-                {/*Display quote details
-                Gallons Requested: {quote.gallonsRequested}, Delivery Date: {quote.deliveryDate}, Total Amount Due: {quote.totalAmountDue.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-        </div>
-        {/*Should this be a link back to fuel form or home or two links?
-        <Link to="/fuelform">Back to Fuel Form</Link>
-        <li><a href='#fuelform' onClick={()=>{window.location.replace('/fuelform')}}>Back to Fuel Quote Form</a></li>
-        {/*<Link to="/home">Back to Home</Link>
-      </div> */}
     </div>
-  );
-};
+  )
+}
 
 export default History
