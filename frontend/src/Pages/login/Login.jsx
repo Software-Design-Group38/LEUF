@@ -126,7 +126,6 @@ const Login = () => {
                 </Typography></div>
                 <Button
                   type="submit"
-                  color="white"
                   size="lg"
                   fullWidth
                 >{create ? "Sign up" : "Log in"}</Button>
