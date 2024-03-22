@@ -86,7 +86,7 @@ const Login = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Must be at least 4 to 20 characters.
+                  Username must be at least 4 to 20 characters.
                 </Typography>
                 </div>
                 <div>
@@ -122,7 +122,7 @@ const Login = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Must be at least 8 to 30 characters.
+                  Password must be at least 8 to 30 characters.
                 </Typography></div>
                 <Button
                   type="submit"

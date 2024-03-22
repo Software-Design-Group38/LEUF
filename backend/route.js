@@ -9,6 +9,28 @@ router.post("/login", async (req, res) => {
   }
 
   // Authenticate username and password in database
+  // If username does not exist in database, return message "Username does not exist"
+  // If username exists in database but password incorrect, return message "Username and password does not match"
+  try {
+    const user = await user.findOne({ where: { username } })
+
+    if (!user) {
+      return res.status(404).json({ message: "Username does not exist" })
+    }
+
+    const isPasswordValid = await user.validPassword(password)
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Username and password do not match" })
+    }
+
+    // Return success if it passes all verifications
+    return res.status(200).json({ message: "Login successful" })
+  } catch (error) {
+    console.error("Error during login:", error);
+    return res.status(500).json({ message: "Internal Server Error" })
+  }
+  // return res.status(200).json({ message: "Login successful" })
     // If username does not exist in database, return message "Username does not exist"
     // If username exists in database but password incorrect, return message "Username and password does not match"
 
@@ -24,8 +46,8 @@ router.post("/register", (req, res) => {
   }
 
   // Check if username is in database, if not then add it
+  // If username already in database, return message "Username already exists"
     // If username already in database, return message "Username already exists"
-
   // Check if username and password are valid (are between minLength and maxLength)
 
   const registerProfile = {
