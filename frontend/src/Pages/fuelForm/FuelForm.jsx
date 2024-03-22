@@ -8,7 +8,6 @@ import { DayPicker } from "react-day-picker"
 const FuelForm = () => {
   // State variables to manage form data
   const [gallonsRequested, setGallonsRequested] = useState('')
-  const [deliveryDate, setDeliveryDate] = useState('')
   const [date, setDate] = useState()
   const [fuelQuotes, setFuelQuotes] = useState([])
   const navigate = useNavigate()
@@ -29,7 +28,7 @@ const FuelForm = () => {
     //Construct fuel quote object
     const fuelQuote = {
       gallonsRequested: parseFloat(gallonsRequested),
-      deliveryDate: deliveryDate,
+      deliveryDate: date,
       totalAmountDue: totalAmountDue
     };
     

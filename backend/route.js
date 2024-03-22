@@ -31,6 +31,11 @@ router.post("/login", async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" })
   }
   // return res.status(200).json({ message: "Login successful" })
+    // If username does not exist in database, return message "Username does not exist"
+    // If username exists in database but password incorrect, return message "Username and password does not match"
+
+  // Return success if it passes all verifications
+  return res.status(200).json({ message: "Login successful" })
 })
 
 router.post("/register", (req, res) => {
@@ -42,7 +47,7 @@ router.post("/register", (req, res) => {
 
   // Check if username is in database, if not then add it
   // If username already in database, return message "Username already exists"
-
+    // If username already in database, return message "Username already exists"
   // Check if username and password are valid (are between minLength and maxLength)
 
   const registerProfile = {
