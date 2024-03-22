@@ -6,6 +6,7 @@ router.post('/login', profileController.login)
 router.post('/register', profileController.createProfile)
 router.put('/profile', profileController.updateProfile)
 
-//router.post('/fuelform', fuelQuoteController.getQuote)
+router.post('/fuelform', fuelQuoteController.getQuote)
+//router.get('/history', fuelQuoteController.getHistory)
 
 module.exports = router

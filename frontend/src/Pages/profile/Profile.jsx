@@ -119,6 +119,7 @@ const Profile = () => {
                 label="Address 1"
                 placeholder="Enter Your Address"
                 size="lg"
+                maxLength={100}
                 required
                 value={address1}
                 onChange={(e) => setAddress1(e.target.value)}
@@ -129,6 +130,7 @@ const Profile = () => {
                 label="Address 2 (optional)"
                 placeholder="Enter Your Address"
                 size="lg"
+                maxLength={100}
                 value={address2}
                 onChange={(e) => setAddress2(e.target.value)}
               />

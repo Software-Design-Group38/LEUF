@@ -28,7 +28,10 @@ const FuelForm = () => {
     //Construct fuel quote object
     const fuelQuote = {
       gallonsRequested: parseFloat(gallonsRequested),
+      // Grab address from client profile
+      deliveryAddress: "Address1234",
       deliveryDate: date,
+      suggestedPrice: 2.5,
       totalAmountDue: totalAmountDue
     };
     
@@ -37,6 +40,7 @@ const FuelForm = () => {
     
     axios.post('http://localhost:3001/fuelform', {fuelQuote})
     .then(result => {
+      console.log(fuelQuote)
       console.log(result)
       navigate("/history")
     })
