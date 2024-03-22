@@ -1,9 +1,12 @@
 const express = require('express')
 const cors = require('cors')
-const sql = require('sql')
 const app = express()
 const port = 3001
+<<<<<<< Updated upstream
 //const routers = require("./route.js")
+=======
+const routers = require("../routes.js")
+>>>>>>> Stashed changes
 
 app.use(express.json())
 app.use(cors())
