@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Input, Button, Typography } from "@material-tailwind/react"
+import { AuthContext } from '../../auth'
 
 const Login = () => {
   const [username, setUsername] = useState("")
@@ -26,7 +27,7 @@ const Login = () => {
     axios.post('http://localhost:3001/login', {username, password})
     .then(result => {
       console.log(result)
-      navigate("/")
+      navigate("/fuelform")
     })
     .catch(err => console.log(err))
 	}
@@ -49,7 +50,6 @@ const Login = () => {
 
   return (
     <div class="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
-        {/* Login Popup; create=false*/}
         <Typography variant="h1" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>
         <div class={"w-96 p-6 shadow-lg bg-white rounded-md"}>
           <form onSubmit={create ? handleRegister : handleLogin}>

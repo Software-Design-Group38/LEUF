@@ -1,3 +1,5 @@
+const PricingModule = require("../pricingModule.js")
+
 class FuelController{
     static async getQuote(req, res) {
         try {
