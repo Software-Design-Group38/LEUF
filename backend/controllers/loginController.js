@@ -1,3 +1,6 @@
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+
 class LoginController {
     static async login(req, res) {
         try{
@@ -19,16 +22,17 @@ class LoginController {
             // Check if username and password are in database; return status; user does not exist if not in DB
             /*const user = await user.findOne({ where: { username } })
             if (!user) {
-                return res.status(404).json({ message: "Username does not exist" })
+                return res.status(400).json({ message: "Username does not exist" })
             }
 
-            const isPasswordValid = await user.validPassword(password)
-            if (!isPasswordValid) {
-            return res.status(401).json({ message: "Username and password do not match" })
+            if (await bcrypt.compare(password, user.password)) {
+                return res.status(200).json({ message: "Login successful" })
+            }
+            else{
+                return res.status(400).json({ message: "Username and password does not match" })
             }
             */
-
-            return res.status(200).json({ message: "Login successful" })
+            return res.status(200).json({ message: "Login successful" }) // Temporary return
         }
         catch (err) {
             console.error("Error during login:", err)
@@ -58,10 +62,11 @@ class LoginController {
             if (user) {
                 return res.status(409).json({ message: "User already exists" })
             }*/
+            const hashedPW = await bcrypt.hash(password, 10)
 
-            const registerProfile = {
+            const user = {
                 username: username,
-                password: password,
+                password: hashedPW,
                 name: null,
                 address1: null,
                 address2: null,
@@ -69,7 +74,7 @@ class LoginController {
                 state: null,
                 zipcode: null
             }
-            // Add registerProfile into DB then return
+            // Add user into DB then return
 
             return res.status(200).json({ message: "Signup successful" })
         }
@@ -79,7 +84,9 @@ class LoginController {
     }
 
     static async logout(req, res) {
-
+        // Clear token
+        
+        return res.status(200).json({ message: "Logout successful" })
     }
 }
 

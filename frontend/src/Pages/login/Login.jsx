@@ -42,12 +42,6 @@ const Login = () => {
     .catch(err => console.log(err))
   }
 
-  // Testing to see if username and password are passed/updating correctly
-  /*const handleH = (e) => {
-    e.preventDefault()
-    console.log(username + " " + password)
-  }*/
-
   return (
     <div class="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
         <Typography variant="h1" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>

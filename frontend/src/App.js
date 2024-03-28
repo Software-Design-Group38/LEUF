@@ -31,17 +31,25 @@ function App() {
         <Navbar/>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
+            {/* ProtectedRoutes; uncomment after authenticating user in DB
             <Route path="/" element={<Home />} />
-            <Route path="/fuelform" element={<ProtectedRoute><FuelForm /></ProtectedRoute>}/>
+            <Route path="/fuelform" element={<FuelForm />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Login />}/>
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>}/>
+            */}
+            <Route path="/" element={<Home />} />
+            <Route path="/fuelform" element={<FuelForm />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/register" element={<Login />}/>
+            <Route path="/profile" element={<Profile />}/>
+            <Route path="/history" element={<History />}/>
           </Routes>
         </Suspense>
       </AuthProvider>
   </Router>
-  );
+  )
 }
 
-export default App;
+export default App

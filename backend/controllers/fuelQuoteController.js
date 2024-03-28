@@ -3,11 +3,11 @@ const PricingModule = require("../pricingModule.js")
 class FuelController{
     static async getQuote(req, res) {
         try {
-            const galRequested = req.body.gallonsRequested
-            const address = req.body.deliveryAddress
-            const date = req.body.deliveryDate
-            const suggested = req.body.suggestedPrice
-            const total = req.body.totalAmountDue
+            const galRequested = req.body.fuelQuote.gallonsRequested
+            const address = req.body.fuelQuote.deliveryAddress
+            const date = req.body.fuelQuote.deliveryDate
+            const suggested = req.body.fuelQuote.suggestedPrice // Total and suggested should be received from pricing module
+            const total = req.body.fuelQuote.totalAmountDue     // rather than frontend later on
 
             if (isNaN(galRequested) || galRequested <= 0){
                 return res.status(400).json({ message: "At least 1 gallon must be requested" })
@@ -21,7 +21,7 @@ class FuelController{
                 totalAmountDue: total
             }
 
-            // Send fuelReq to Pricing Module to determine pricing
+            // Send fuelReq to DB to update user history
             console.log(fuelReq)
             return res.status(200).json({ message: "Fuel quote submitted successfully" })
         }

@@ -5,6 +5,7 @@ const fuelQuoteController = require("./controllers/fuelQuoteController")
 
 router.post('/login', loginController.login)
 router.post('/register', loginController.register)
+router.post('/logout', loginController.logout)
 
 router.put('/profile', profileController.updateProfile)
 

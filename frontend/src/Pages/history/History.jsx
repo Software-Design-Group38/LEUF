@@ -4,7 +4,7 @@ import { Card, Typography, Button } from "@material-tailwind/react"
 
 const TABLE_HEAD = ["Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
 
-// Example tests
+// Example tests; will receive history from DB later
 const TABLE_ROWS = [
   {
     requested: 24,
@@ -33,8 +33,8 @@ const History = () => {
   }
 
   return (
-    <div className="h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
-      <div className="flex flex-col overflow-y-auto justify-center items-center h-3/4 gap-3">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
+      <div className="flex flex-col justify-center items-center h-3/4 w-screen gap-3">
         <Typography variant="h1" color="blue-gray" className="text-center">History</Typography>
         <Card className="h-3/4 w-3/4 overflow-scroll ">
           <table className="w-full min-w-max table-auto text-left">
@@ -87,7 +87,7 @@ const History = () => {
           </table>
         </Card>
         <a onClick={handleFuel}>
-          <Button variant="gradient">Back to Fuel Form?</Button>
+          <Button variant="gradient" className="border-none">Back to Fuel Form?</Button>
         </a>
       </div>
     </div>
