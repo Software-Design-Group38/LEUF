@@ -49,7 +49,7 @@ describe('FuelController', () => {
       expect(res.json).toHaveBeenCalledWith({ message: "Fuel quote submitted successfully" });
     });
     
-    it('should return a 500 error if an error occurs during execution', async () => {
+    it('should return a 500 error if an error occurs during execution', () => {
       const req = {
         body: {
           fuelQuote: {
@@ -69,13 +69,13 @@ describe('FuelController', () => {
       // Mocking an error during execution
       jest.spyOn(console, 'error').mockImplementation(() => {});
 
-      await FuelController.getQuote(req, res);
+      FuelController.getQuote(req, res);
 
       expect(console.error).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ message: "Unable to submit fuel quote" });
     });
-    
+
   });
 
   // Add more test cases as needed
