@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Input, Button, Typography } from "@material-tailwind/react"
@@ -7,6 +7,7 @@ import { AuthContext } from '../../auth'
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const { login } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -22,30 +23,38 @@ const Login = () => {
     setShowPW(!showPW)
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    axios.post('http://localhost:3001/login', {username, password})
+    try {
+      const response = await login(username, password)
+      navigate("/")
+    } catch (err) {
+      console.log(err)
+    }
+
+    /*axios.post('http://localhost:3001/login', {username, password})
     .then(result => {
       console.log(result)
       navigate("/fuelform")
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err))*/
 	}
 
   const handleRegister = (e) => {
     e.preventDefault()
     axios.post('http://localhost:3001/register', {username, password})
     .then(result => {
-      console.log(result)
+      sessionStorage.setItem("name", "undefined")
+      console.log(sessionStorage)
       navigate("/profile")
     })
     .catch(err => console.log(err))
   }
 
   return (
-    <div class="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
+    <div className="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
         <Typography variant="h1" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>
-        <div class={"w-96 p-6 shadow-lg bg-white rounded-md"}>
+        <div className={"w-96 p-6 shadow-lg bg-white rounded-md"}>
           <form onSubmit={create ? handleRegister : handleLogin}>
             <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h3" color="blue-gray" className="text-center">{create ? "Sign Up" : "Login"}</Typography>
@@ -125,7 +134,7 @@ const Login = () => {
                 >{create ? "Sign up" : "Log in"}</Button>
             </div>
           </form>
-            <div class="mt-5">
+            <div className="mt-5">
             <Typography color="gray" className="mt-4 text-center font-normal">
               {create ? (
                 <>

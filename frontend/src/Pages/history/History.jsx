@@ -11,14 +11,14 @@ const TABLE_ROWS = [
     address: "12345 Test St",
     date: "01/21/2024",
     suggested: 2,
-    total: 25,
+    total: 48,
   },
   {
-    requested: 24,
+    requested: 12,
     address: "12345 Test St",
     date: "02/13/2024",
-    suggested: 4,
-    total: 50,
+    suggested: 3,
+    total: 36,
   },
 ]
 

@@ -54,7 +54,7 @@ const states = [
     { name: "WV", fullName: "West Virginia" },
     { name: "WI", fullName: "Wisconsin" },
     { name: "WY", fullName: "Wyoming" }
-  ];
+  ]
 
 const Profile = () => {
     const [name, setName] = useState("")
@@ -84,19 +84,15 @@ const Profile = () => {
       axios.put('http://localhost:3001/profile', data)
       .then(result => {
         console.log(result)
+        sessionStorage.setItem("name", name)
         navigate("/")
       })
       .catch(err => console.log(err))
 	  }
-
-    const handleChange = (e) => {
-      console.log(e)
-      setState(e)
-    }
   
   return (
-    <div class="flex justify-center items-center h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
-        <div class="w-1/4 p-6 shadow-lg bg-white rounded-md">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]">
+        <div className="w-1/4 p-6 shadow-lg bg-white rounded-md">
           <form onSubmit={onSubmit}>
             <div className="mb-1 flex flex-col gap-4">
               <Typography variant="h1" color="blue-gray" className="text-center">Account Information</Typography>

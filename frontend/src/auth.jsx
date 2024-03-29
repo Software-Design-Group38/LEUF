@@ -13,13 +13,14 @@ export const AuthProvider = ({ children }) => {
     const login = async (username, password) => {
       try {
         const response = await axios.post('http://localhost:3001/login', {username, password})
-  
+        console.log(response)
         setAuthState({
           token: response.data.token,
           username: response.data.username,
           isAuthenticated: true
         })
-  
+        
+        sessionStorage.setItem("name", response.data.name)
         return response
   
       } catch (error) {
@@ -30,15 +31,16 @@ export const AuthProvider = ({ children }) => {
   
     const logout = async () => {
       try {
-        const response = await axios.post('https://optifuel-forecast-server.vercel.app/auth/logout')
+        const response = await axios.post('http://localhost:3001/logout')
   
         setAuthState({
           token: null,
           username: null,
           isAuthenticated: false
         })
-  
-        return response;
+        
+        sessionStorage.removeItem("name")
+        return response
   
       } catch (error) {
         console.log(error.response.data)
