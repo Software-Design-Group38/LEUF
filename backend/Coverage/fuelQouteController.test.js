@@ -1,4 +1,5 @@
-const FuelController = require('../FuelController');
+const FuelController = require('../controllers/fuelQuoteController.js');
+const app = require('../api/index.js')
 
 describe('FuelController', () => {
   describe('getQuote', () => {
@@ -47,8 +48,8 @@ describe('FuelController', () => {
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({ message: "Fuel quote submitted successfully" });
     });
-
-    it('should return a 500 error if an error occurs during execution', () => {
+    
+    it('should return a 500 error if an error occurs during execution', async () => {
       const req = {
         body: {
           fuelQuote: {
@@ -68,12 +69,13 @@ describe('FuelController', () => {
       // Mocking an error during execution
       jest.spyOn(console, 'error').mockImplementation(() => {});
 
-      FuelController.getQuote(req, res);
+      await FuelController.getQuote(req, res);
 
       expect(console.error).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ message: "Unable to submit fuel quote" });
     });
+    
   });
 
   // Add more test cases as needed
