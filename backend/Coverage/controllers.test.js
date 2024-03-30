@@ -158,6 +158,42 @@ describe('LoginController', () => {
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
     });
 
+    it('should return a 500 error if username is more than 20 characters', () => {
+      const req = {
+        body: {
+          username: 'invalidusernamemynameislarry', // invalid username
+          password: 'password123'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      LoginController.login(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
+    });
+
+    it('should return a 500 error if password is more than 30 characters', () => {
+      const req = {
+        body: {
+          username: 'validusername',
+          password: 'passwordmynameislarryandilikeicecream' // Invalid password
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      LoginController.login(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
+    });
+
     it('should return a 200 status and success message if login is successful', () => {
       const req = {
         body: {
