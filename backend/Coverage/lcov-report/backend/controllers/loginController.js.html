@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10.34% </span>
+                <span class="strong">41.37% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/29</span>
+                <span class='fraction'>12/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">41.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/24</span>
+                <span class='fraction'>10/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>1/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10.34% </span>
+                <span class="strong">41.37% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/29</span>
+                <span class='fraction'>12/29</span>
             </div>
         
             
@@ -160,20 +160,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,21 +251,21 @@
 const jwt = require("jsonwebtoken")
 &nbsp;
 class LoginController {
-<span class="fstat-no" title="function not covered" >    st</span>atic async login(req, res) {
-<span class="cstat-no" title="statement not covered" >        try{</span>
-            const username = <span class="cstat-no" title="statement not covered" >req.body.username</span>
-            const password = <span class="cstat-no" title="statement not covered" >req.body.password</span>
+    static async login(req, res) {
+        try{
+            const username = req.body.username
+            const password = req.body.password
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (!username || !password){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(400).json({ message: "Username and password are required" })</span>
+            if (!username || !password){
+                return res.status(400).json({ message: "Username and password are required" })
             }
 &nbsp;
             // Conduct other validations such as username/password lengths
-<span class="cstat-no" title="statement not covered" >            if (username.length &lt; 4 || username.length &gt; 20){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid username" })</span>
+            if (username.length &lt; 4 || username.length &gt; 20){
+                return res.status(500).json({ error: "Invalid username" })
             }
-<span class="cstat-no" title="statement not covered" >            if (password.length &lt; 8 || password.length &gt; 30){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid username" })</span>
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (password.length &lt; 8 || <span class="branch-1 cbranch-no" title="branch not covered" >password.length &gt; 30)</span>{
+                return res.status(500).json({ error: "Invalid username" })
             }
 &nbsp;
             // Check if username and password are in database; return status; user does not exist if not in DB
@@ -346,7 +346,7 @@ module.exports = LoginController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-29T21:47:37.563Z
+                at 2024-03-30T00:50:10.354Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

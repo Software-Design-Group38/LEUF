@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">4% </span>
+                <span class="strong">52% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/25</span>
+                <span class='fraction'>13/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">32% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/25</span>
+                <span class='fraction'>8/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">4% </span>
+                <span class="strong">52% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/25</span>
+                <span class='fraction'>13/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -114,21 +114,21 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -162,22 +162,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">class ProfileController {
-<span class="fstat-no" title="function not covered" >    st</span>atic async updateProfile(req, res) {
-<span class="cstat-no" title="statement not covered" >        try {</span>
-            const clientUsername = <span class="cstat-no" title="statement not covered" >req.body.username</span>
-            const clientName = <span class="cstat-no" title="statement not covered" >req.body.name</span>
-            const clientAddress1 = <span class="cstat-no" title="statement not covered" >req.body.address1</span>
-            const clientAddress2 = <span class="cstat-no" title="statement not covered" >req.body.address2</span>
-            const clientCity = <span class="cstat-no" title="statement not covered" >req.body.city</span>
-            const clientState = <span class="cstat-no" title="statement not covered" >req.body.state</span>
-            const clientZipcode = <span class="cstat-no" title="statement not covered" >req.body.zipcode</span>
+    static async updateProfile(req, res) {
+        try {
+            const clientUsername = req.body.username
+            const clientName = req.body.name
+            const clientAddress1 = req.body.address1
+            const clientAddress2 = req.body.address2
+            const clientCity = req.body.city
+            const clientState = req.body.state
+            const clientZipcode = req.body.zipcode
 &nbsp;
             // Validate all const if valid
-<span class="cstat-no" title="statement not covered" >            if (!isNaN(clientName) || clientName == "" || clientName.length &gt; 50){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid name" })</span>
+            if (!isNaN(clientName) || clientName == "" || clientName.length &gt; 50){
+                return res.status(500).json({ error: "Invalid name" })
             }
-<span class="cstat-no" title="statement not covered" >            if (clientAddress1 == "" || clientAddress2.length &gt; 100){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid address 1" })</span>
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (clientAddress1 == "" || clientAddress2.length &gt; 100){
+                return res.status(500).json({ error: "Invalid address 1" })
             }
 <span class="cstat-no" title="statement not covered" >            if (clientAddress2.length &gt; 100){</span>
 <span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid address 2" })</span>
@@ -217,7 +217,7 @@ module.exports = ProfileController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-29T21:47:37.563Z
+                at 2024-03-30T00:50:10.354Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
