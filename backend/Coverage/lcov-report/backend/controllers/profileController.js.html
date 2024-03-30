@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52% </span>
+                <span class="strong">84% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/25</span>
+                <span class='fraction'>21/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">32% </span>
+                <span class="strong">88% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/25</span>
+                <span class='fraction'>22/25</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52% </span>
+                <span class="strong">84% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/25</span>
+                <span class='fraction'>21/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -114,33 +114,33 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -156,7 +156,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,20 +176,20 @@
             if (!isNaN(clientName) || clientName == "" || clientName.length &gt; 50){
                 return res.status(500).json({ error: "Invalid name" })
             }
-            <span class="missing-if-branch" title="else path not taken" >E</span>if (clientAddress1 == "" || clientAddress2.length &gt; 100){
+            if (clientAddress1 == "" || clientAddress2.length &gt; 100){
                 return res.status(500).json({ error: "Invalid address 1" })
             }
-<span class="cstat-no" title="statement not covered" >            if (clientAddress2.length &gt; 100){</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (clientAddress2.length &gt; 100){
 <span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid address 2" })</span>
             }
-<span class="cstat-no" title="statement not covered" >            if (clientCity == "" || clientCity.length &gt; 100){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid city" })</span>
+            if (clientCity == "" || clientCity.length &gt; 100){
+                return res.status(500).json({ error: "Invalid city" })
             }
-<span class="cstat-no" title="statement not covered" >            if (clientState == "" || clientState.length != 2){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid state code" })</span>
+            if (clientState == "" || clientState.length != 2){
+                return res.status(500).json({ error: "Invalid state code" })
             }
-<span class="cstat-no" title="statement not covered" >            if (clientZipcode.length &lt; 5 || clientZipcode.length &gt; 9 || isNaN(clientZipcode) || clientZipcode == ""){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid zipcode" })</span>
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (clientZipcode.length &lt; 5 || clientZipcode.length &gt; 9 || isNaN(clientZipcode) || <span class="branch-3 cbranch-no" title="branch not covered" >clientZipcode == "")</span>{
+                return res.status(500).json({ error: "Invalid zipcode" })
             }
             // If passes all validation, set up profileInfo to prepare to update to DB
             const profileInfo = <span class="cstat-no" title="statement not covered" >{</span>
@@ -205,7 +205,7 @@
 <span class="cstat-no" title="statement not covered" >            return res.status(200).json({ message: "Update successful" })</span>
         }
         catch (err) {
-<span class="cstat-no" title="statement not covered" >            res.status(500).json({ error: err.message })</span>
+            res.status(500).json({ error: err.message })
         }
     }
 }
@@ -217,7 +217,7 @@ module.exports = ProfileController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-30T00:50:10.354Z
+                at 2024-03-30T02:46:17.500Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

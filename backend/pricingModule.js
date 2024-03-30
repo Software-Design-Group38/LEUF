@@ -1,7 +1,7 @@
 class PricingModule {
     static calculatePrice (gallonsRequested, isOutOfState, isRepeatCustomer) {
         try {
-            const currentPricePerGallon = 1.50:
+            const currentPricePerGallon = 1.50;
             const locationFactor = isOutOfState ? 0.04 : 0.02;
             const rateHistoryFactor = isRepeatCustomer ? 0.01 : 0;
             const gallonsFactor = gallonsRequested > 1000 ? 0.02 : 0.03;
