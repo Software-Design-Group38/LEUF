@@ -225,7 +225,7 @@ describe('LoginController', () => {
         json: jest.fn()
       };
 
-      LoginController.login(req, res);
+      LoginController.register(req, res);
 
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ message: "Username and password are required" });
@@ -243,7 +243,7 @@ describe('LoginController', () => {
         json: jest.fn()
       };
 
-      LoginController.login(req, res);
+      LoginController.register(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
@@ -261,7 +261,7 @@ describe('LoginController', () => {
         json: jest.fn()
       };
 
-      LoginController.login(req, res);
+      LoginController.register(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
@@ -279,7 +279,7 @@ describe('LoginController', () => {
         json: jest.fn()
       };
 
-      LoginController.login(req, res);
+      LoginController.register(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
@@ -297,12 +297,12 @@ describe('LoginController', () => {
         json: jest.fn()
       };
 
-      LoginController.login(req, res);
+      LoginController.register(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
     });
-    
+
   });
 
 });
