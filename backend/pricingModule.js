@@ -1,19 +1,26 @@
 class PricingModule {
-    static async calculatePrice (gallonsRequested, pricePerGallon, profitMargin) {
-        //Calculate total price before profit
+    static calculatePrice (gallonsRequested, isOutOfState, isRepeatCustomer) {
         try {
-            let totalBeforeProfit = gallonsRequested * pricePerGallon;
-
+            const currentPricePerGallon = 1.50:
+            const locationFactor = isOutOfState ? 0.04 : 0.02;
+            const rateHistoryFactor = isRepeatCustomer ? 0.01 : 0;
+            const gallonsFactor = gallonsRequested > 1000 ? 0.02 : 0.03;
+            const companyProfitFactor = 0.10;
             //Calculate profit margin
-            let totalPrice = totalBeforeProfit * (1 + profitMargin / 100);
+            const margin = currentPricePerGallon * (locationFactor - rateHistoryFactor + gallonsFactor + companyProfitFactor);
+            //Calculates suggested price per gallon
+            const suggestedPricePerGallon = currentPricePerGallon + margin;
+            //Calculates total price
+            const totalPrice = gallonsRequested * suggestedPricePerGallon;
+
             return totalPrice;
         } 
         catch (err) {
+            // Log error message
             console.error("Unable to calculate fuel price", err)
-            return res.status(500).json({ message: "Unable to calculate fuel price" })
+            throw new Error("Unable to calculate fuel price");
         }
-    }
-    //Do we need to return this info anywhere else?
+    }    
 }
 
 module.exports = PricingModule
