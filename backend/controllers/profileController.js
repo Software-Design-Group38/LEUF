@@ -1,3 +1,5 @@
+const User = require('../models/userModel.js')
+
 class ProfileController {
     static async updateProfile(req, res) {
         try {
@@ -38,6 +40,7 @@ class ProfileController {
                 zipcode: clientZipcode
             }
             // Update profileInfo to clientUsername in DB and return success
+            const user = await User.findOneAndUpdate({ username: clientUsername}, { $set: { userInfo: profileInfo } })
             console.log(profileInfo)
             return res.status(200).json({ message: "Update successful" })
         }

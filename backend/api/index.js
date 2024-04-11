@@ -1,10 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const dotenv = require('dotenv')
 const routers = require("../routes.js")
-const db = require("../database.js")
-dotenv.config()
+//const db = require("../database.js")
+const mongoose = require('mongoose')
+require('dotenv/config')
 
 app.use(express.json())
 app.use(cors())
@@ -14,7 +14,8 @@ app.get('/', (req, res) => {
   res.send("Hello")
 })
 
-db.connect((err) => {
+/*
+db.getConnection((err) => {
   if (err){
     console.error("Database connection failed: " + err.stack)
     return
@@ -22,7 +23,12 @@ db.connect((err) => {
   else{
     console.log("Connected to database")
   }
-})
+})*/
+
+//const dbOptions = {useNewUrlParser: true, useUnifiedTopology: true}
+mongoose.connect(process.env.DB_URI)
+  .then(() => console.log('DB Connected'))
+  .catch(err => console.log(err))
 
 app.use(routers)
 

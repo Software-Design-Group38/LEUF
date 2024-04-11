@@ -1,5 +1,8 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const db = require("../database.js")
+const mongoose = require("mongoose")
+const User = require("../models/userModel.js")
 
 class LoginController {
     static async login(req, res) {
@@ -20,19 +23,23 @@ class LoginController {
             }
 
             // Check if username and password are in database; return status; user does not exist if not in DB
-            /*const user = await user.findOne({ where: { username } })
+            const user = await User.findOne({ username })
             if (!user) {
-                return res.status(400).json({ message: "Username does not exist" })
+                return res.status(400).json({ message: "User does not exist" })
             }
 
             if (await bcrypt.compare(password, user.password)) {
-                return res.status(200).json({ message: "Login successful" })
+                const token = jwt.sign({_id: user._id}, "secretkey123", {
+                    expiresIn: '90d',
+                })
+
+                return res.status(200).json({ message: "Login successful", token })
             }
             else{
                 return res.status(400).json({ message: "Username and password does not match" })
             }
-            */
-            return res.status(200).json({ message: "Login successful" }) // Temporary return
+            
+            //return res.status(200).json({ message: "Login successful" }) // Temporary return
         }
         catch (err) {
             console.error("Error during login:", err)
@@ -58,25 +65,22 @@ class LoginController {
             }
 
             // Check if username already exists in database, if so, return status/msg Username already exists
-            /*const user = await user.findOne({ where: { username } })
+            const user = await User.findOne({ username: username })
             if (user) {
                 return res.status(409).json({ message: "User already exists" })
-            }*/
+            }
             const hashedPW = await bcrypt.hash(password, 10)
 
-            const user = {
+            const newUser = await User.create({
                 username: username,
                 password: hashedPW,
-                name: null,
-                address1: null,
-                address2: null,
-                city: null,
-                state: null,
-                zipcode: null
-            }
-            // Add user into DB then return
+            })
+            
+            const token = jwt.sign({_id: newUser._id}, "secretkey123", {
+                expiresIn: '90d',
+            })
 
-            return res.status(200).json({ message: "Signup successful" })
+            return res.status(200).json({ message: "Signup successful", token })
         }
         catch (err) {
             return res.status(500).json({ error: err.message })
