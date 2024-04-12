@@ -30,6 +30,7 @@ const Login = () => {
       localStorage.setItem('username', username)
       navigate("/profile")
     } catch (err) {
+      localStorage.removeItem('username')
       console.log(err)
     }
 
