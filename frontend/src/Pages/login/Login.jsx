@@ -27,8 +27,10 @@ const Login = () => {
     e.preventDefault()
     try {
       const response = await login(username, password)
-      navigate("/")
+      localStorage.setItem('username', username)
+      navigate("/profile")
     } catch (err) {
+      localStorage.removeItem('username')
       console.log(err)
     }
 

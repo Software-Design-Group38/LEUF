@@ -1,28 +1,32 @@
 const PricingModule = require("../pricingModule.js")
+const { User, UserInfo } = require('../models/userModel.js')
+const { FuelQuote } = require('../models/fuelModel.js')
 
 class FuelController{
     static async getQuote(req, res) {
         try {
-            const galRequested = req.body.fuelQuote.gallonsRequested
-            const address = req.body.fuelQuote.deliveryAddress
-            const date = req.body.fuelQuote.deliveryDate
-            const suggested = req.body.fuelQuote.suggestedPrice // Total and suggested should be received from pricing module
-            const total = req.body.fuelQuote.totalAmountDue     // rather than frontend later on
+            const {username, fuelQuote} = req.body    
+            const {gallonsRequested, deliveryAddress, deliveryDate, suggestedPrice} = fuelQuote
 
-            if (isNaN(galRequested) || galRequested <= 0){
+            if (isNaN(gallonsRequested) || gallonsRequested <= 0){
                 return res.status(400).json({ message: "At least 1 gallon must be requested" })
             }
 
-            const fuelReq = {
+            const user = await User.findOne({ username: username })
+            const userInfo = await UserInfo.findOne({_id: user._id})
+
+            const total = PricingModule.calculatePrice(gallonsRequested, userInfo.state != "TX", await FuelQuote.findOne({_id: user._id}))
+            
+            /*const fuelReq = {
                 gallonsRequested: galRequested,
                 deliveryAddress: address,
                 deliveryDate: date,
                 suggestedPrice: suggested,
                 totalAmountDue: total
-            }
+            }*/
 
             // Send fuelReq to DB to update user history
-            console.log(fuelReq)
+            //console.log(fuelReq)
             return res.status(200).json({ message: "Fuel quote submitted successfully" })
         }
         catch (err) {

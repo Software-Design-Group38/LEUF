@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
 })
 
 const userInfoSchema = new mongoose.Schema({
-    userID: {
+    _id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },

@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 const db = require("../database.js")
 const mongoose = require("mongoose")
 const { User } = require("../models/userModel.js")
+require('dotenv/config')
 
 class LoginController {
     static async login(req, res) {
@@ -29,11 +30,22 @@ class LoginController {
             }
 
             if (await bcrypt.compare(password, user.password)) {
-                const token = jwt.sign({_id: user._id}, "secretkey123", {
-                    expiresIn: '90d',
+                const token = jwt.sign({_id: user._id, username: user.username}, process.env.SECRETKEY, {
+                    expiresIn: '24h',
                 })
 
-                return res.status(200).json({ message: "Login successful", token })
+                res.cookie('token', token, {
+                    httpOnly: true,
+                    sameSite: 'strict'
+                })
+
+                return res.status(200).send({
+                    message: "Login successful",
+                    token,
+                    user: {
+                        username: user.username
+                    }
+                })
             }
             else{
                 return res.status(400).json({ message: "Username and password does not match" })
@@ -76,8 +88,8 @@ class LoginController {
                 password: hashedPW,
             })
             
-            const token = jwt.sign({_id: newUser._id}, "secretkey123", {
-                expiresIn: '90d',
+            const token = jwt.sign({_id: newUser._id}, process.env.SECRETKEY, {
+                expiresIn: '24h',
             })
 
             return res.status(200).json({ message: "Signup successful", token })
@@ -89,7 +101,7 @@ class LoginController {
 
     static async logout(req, res) {
         // Clear token
-        
+        res.clearCookie('token')
         return res.status(200).json({ message: "Logout successful" })
     }
 }
