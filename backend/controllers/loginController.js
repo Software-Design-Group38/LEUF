@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const db = require("../database.js")
 const mongoose = require("mongoose")
-const User = require("../models/userModel.js")
+const { User } = require("../models/userModel.js")
 
 class LoginController {
     static async login(req, res) {
@@ -30,10 +30,16 @@ class LoginController {
 
             if (await bcrypt.compare(password, user.password)) {
                 const token = jwt.sign({_id: user._id}, "secretkey123", {
-                    expiresIn: '90d',
+                    expiresIn: '24h',
                 })
 
-                return res.status(200).json({ message: "Login successful", token })
+                return res.status(200).json({
+                    message: "Login successful",
+                    token,
+                    user: {
+                        username: user.username
+                    }
+                })
             }
             else{
                 return res.status(400).json({ message: "Username and password does not match" })
@@ -77,7 +83,7 @@ class LoginController {
             })
             
             const token = jwt.sign({_id: newUser._id}, "secretkey123", {
-                expiresIn: '90d',
+                expiresIn: '24h',
             })
 
             return res.status(200).json({ message: "Signup successful", token })

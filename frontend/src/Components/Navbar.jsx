@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Menu, MenuHandler, MenuList, Typography, IconButton, MenuItem } from "@material-tailwind/react"
-import axios from "axios"
 import { AuthContext } from '../auth'
 
 const Navbar = () => {
@@ -38,7 +37,7 @@ const Navbar = () => {
                 <Typography variant="h2" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>
             </div>
             <ul className='flex'>
-                {!notUser || name && (<>
+                {(notUser || name) && (<>
                     <li>
                         <Typography variant="h4" className="text-center cursor-pointer hover:text-blue-600" onClick={()=>{window.location.replace('/fuelform')}}>Fuel Quote Form</Typography>
                     </li>

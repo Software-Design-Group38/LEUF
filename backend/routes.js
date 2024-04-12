@@ -8,6 +8,7 @@ router.post('/register', loginController.register)
 router.post('/logout', loginController.logout)
 
 router.put('/profile', profileController.updateProfile)
+router.get('/user/:username', profileController.getProfile)
 
 router.post('/fuelform', fuelQuoteController.getQuote)
 //router.get('/history', fuelQuoteController.getHistory)

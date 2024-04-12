@@ -1,4 +1,4 @@
-const User = require('../models/userModel.js')
+const { User } = require('../models/userModel.js')
 
 class ProfileController {
     static async updateProfile(req, res) {
@@ -46,6 +46,16 @@ class ProfileController {
         }
         catch (err) {
             res.status(500).json({ error: err.message })
+        }
+    }
+
+    static async getProfile(req, res) {
+        try {
+            const user = await User.findOne({ username: req.params.username })
+
+            return res.status(200).json({ user, message: "User found" })
+        } catch (err) {
+            return res.status(500).json({error: err.message})
         }
     }
 }

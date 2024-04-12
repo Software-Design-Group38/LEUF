@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Input, Typography, Select, Option, Button } from "@material-tailwind/react"
+import { AuthContext } from '../../auth'
 
 const states = [
     { name: "AL", fullName: "Alabama" },
@@ -64,6 +65,26 @@ const Profile = () => {
     const [state, setState] = useState("")
     const [zipcode, setZipcode] = useState("")
     const navigate = useNavigate()
+    const authState = useContext(AuthContext)
+    //console.log(authState)
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          if (!authState.username){
+            //console.log('Username not defined in authState')
+            return
+          }
+
+          const response = await axios.get(`http://localhost:3001/user/${authState.username}`)
+          console.log(response)
+        } catch (err) {
+          console.error('Error fetching data:', err)
+        }
+      }
+
+      fetchData()
+    }, [authState.username])
 
     const onSubmit = (e) => {
       e.preventDefault()
