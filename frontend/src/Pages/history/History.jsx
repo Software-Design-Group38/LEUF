@@ -1,6 +1,7 @@
-import React, {startTransition, useState} from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, {startTransition, useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, Typography, Button } from "@material-tailwind/react"
+import axios from 'axios'
 
 const TABLE_HEAD = ["Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
 
@@ -25,6 +26,24 @@ const TABLE_ROWS = [
 const History = () => {
   const [fuelQuotes, setFuelQuotes] = useState([])
   const navigate = useNavigate()
+  const username = localStorage.getItem('username')
+  const name = localStorage.getItem('name')
+
+  useEffect(() => {
+    if (!name){
+      navigate('/profile')
+    }
+    else{
+      axios.get(`http://localhost:3001/history/${username}`)
+      .then((response) =>{
+        const info = response.data.fuelHistory.fuelInfo
+        setFuelQuotes(info)
+      })
+      .catch((err) =>{
+        console.error(err)
+      })
+    }
+  }, [username, navigate])
 
   const handleFuel = () => {
     startTransition(() => {

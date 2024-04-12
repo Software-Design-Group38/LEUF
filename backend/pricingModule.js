@@ -13,7 +13,7 @@ class PricingModule {
             //Calculates total price
             const totalPrice = gallonsRequested * suggestedPricePerGallon;
 
-            return totalPrice;
+            return { suggestedPricePerGallon, totalPrice };
         } 
         catch (err) {
             // Log error message

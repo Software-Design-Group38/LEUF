@@ -46,7 +46,7 @@ class ProfileController {
             const userInfo = await UserInfo.findOne({ _id: user._id })
 
             if (!userInfo){
-                return
+                return res.status(404).json({ error: "User info not found" })
             }
 
             return res.status(200).json({ userInfo, message: "User found" })

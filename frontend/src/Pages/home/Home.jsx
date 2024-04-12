@@ -12,6 +12,7 @@ const Home = () => {
         if (response.status === 200){
           const user = response.data.userInfo
           setName(user.name)
+          localStorage.setItem('name', user.name)
         }
         else{
           console.log(`Received response: ${response}`)
@@ -20,7 +21,7 @@ const Home = () => {
       .catch((err) =>{
         console.error(err)
       })
-  }, [])
+  }, [username])
 
   return (
     <div className='flex justify-center items-center flex-col bg-gradient-to-b from-[#C5CCCE] to-[#2B475F] h-screen'>

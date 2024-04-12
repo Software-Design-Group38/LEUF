@@ -26,9 +26,9 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await login(username, password)
+      await login(username, password)
       localStorage.setItem('username', username)
-      navigate("/profile")
+      navigate("/")
     } catch (err) {
       localStorage.removeItem('username')
       console.log(err)
@@ -46,8 +46,7 @@ const Login = () => {
     e.preventDefault()
     axios.post('http://localhost:3001/register', {username, password})
     .then(result => {
-      sessionStorage.setItem("name", "undefined")
-      console.log(sessionStorage)
+      localStorage.setItem("username", username)
       navigate("/profile")
     })
     .catch(err => console.log(err))

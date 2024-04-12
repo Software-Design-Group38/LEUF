@@ -12,16 +12,16 @@ const History = lazy(() => import('./Pages/history/History'))
 const ProtectedRoute = ({ children }) => {
   const { authState } = useContext(AuthContext)
   const navigate = useNavigate()
+  const username = localStorage.getItem('username')
 
   // Redirect to login if not authenticated
   useEffect(() => {
-    console.log(authState.isAuthenticated)
-    if (!authState.isAuthenticated) {
+    if (!username) {
       navigate('/login')
     }
-  }, [authState.isAuthenticated])
+  }, [username, navigate])
 
-  return authState.isAuthenticated ? children : null
+  return username ? children : null
 }
 
 function App() {
@@ -32,10 +32,10 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/fuelform" element={<FuelForm />}/>
+            <Route path="/fuelform" element={<ProtectedRoute><FuelForm /></ProtectedRoute>}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Login />}/>
-            <Route path="/profile" element={<Profile />}/>
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>}/>
             {/*
             <Route path="/" element={<Home />} />

@@ -12,6 +12,6 @@ router.put('/profile', profileController.updateProfile)
 router.get('/user/:username', profileController.getProfile)
 
 router.post('/fuelform', fuelQuoteController.getQuote)
-//router.get('/history', fuelQuoteController.getHistory)
+router.get('/history/:username', fuelQuoteController.getHistory)
 
 module.exports = router

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Input, Button, Typography, Popover, PopoverHandler, PopoverContent } from "@material-tailwind/react"
@@ -12,11 +12,18 @@ const FuelForm = () => {
   const [fuelQuotes, setFuelQuotes] = useState([])
   const navigate = useNavigate()
   const username = localStorage.getItem('username')
+  const name = localStorage.getItem('name')
 
   //Add fuel quote to state to store in history
   const addFuelQuote = (fuelQuote) => {
     setFuelQuotes([...fuelQuotes, fuelQuote])
   };
+
+  useEffect(() => {
+    if (!name){
+      navigate('/profile')
+    }
+  }, [navigate])
   
   // Function to handle form submission
   const handleSubmit = (event) => {
@@ -32,7 +39,7 @@ const FuelForm = () => {
       // Grab address from client profile
       deliveryAddress: "Address1234",
       deliveryDate: date,
-      suggestedPrice: 2.5,
+      //suggestedPrice: 2.5,
       //totalAmountDue: totalAmountDue
     };
     

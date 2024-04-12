@@ -28,7 +28,7 @@ const Navbar = () => {
         console.error(err)
       })
     }
-  }, [location.pathname])
+  }, [username, location.pathname])
 
   const handleLogout = async (e) => {
     e.preventDefault()

@@ -69,18 +69,21 @@ const Profile = () => {
     useEffect(() => {
       axios.get(`http://localhost:3001/user/${username}`)
         .then((response) =>{
-          const user = response.data.userInfo
-          setName(user.name)
-          setAddress1(user.address1)
-          setAddress2(user.address2)
-          setCity(user.city)
-          setState(user.state)
-          setZipcode(user.zipcode)
+          if (response.status === 200){
+            const user = response.data.userInfo
+            setName(user.name)
+            setAddress1(user.address1)
+            setAddress2(user.address2)
+            setCity(user.city)
+            setState(user.state)
+            setZipcode(user.zipcode)
+            localStorage.setItem('name', user.name)
+          }
         })
         .catch((err) =>{
           console.error(err)
         })
-    }, [])
+    }, [username])
 
     const onSubmit = (e) => {
       e.preventDefault()
