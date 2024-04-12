@@ -11,6 +11,7 @@ const FuelForm = () => {
   const [date, setDate] = useState()
   const [fuelQuotes, setFuelQuotes] = useState([])
   const navigate = useNavigate()
+  const username = localStorage.getItem('username')
 
   //Add fuel quote to state to store in history
   const addFuelQuote = (fuelQuote) => {
@@ -32,23 +33,23 @@ const FuelForm = () => {
       deliveryAddress: "Address1234",
       deliveryDate: date,
       suggestedPrice: 2.5,
-      totalAmountDue: totalAmountDue
+      //totalAmountDue: totalAmountDue
     };
     
     //Add fuel quote to state
     addFuelQuote(fuelQuote)
     
-    axios.post('http://localhost:3001/fuelform', {fuelQuote})
+    axios.post('http://localhost:3001/fuelform', {username, fuelQuote})
     .then(result => {
-      console.log(fuelQuote)
-      console.log(result)
+      //console.log(fuelQuote)
+      //console.log(result)
       navigate("/history")
     })
     .catch(err => console.log(err))
 
     // Display total amount due 
-    console.log(fuelQuote)
-    console.log('Total Amount Due:', totalAmountDue)
+   // console.log(fuelQuote)
+    //console.log('Total Amount Due:', totalAmountDue)
   };
 
   return (
