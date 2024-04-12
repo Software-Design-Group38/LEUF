@@ -2,6 +2,7 @@ const router = require("express").Router()
 const loginController = require("./controllers/loginController")
 const profileController = require("./controllers/profileController")
 const fuelQuoteController = require("./controllers/fuelQuoteController")
+const Auth = require("./middleware/authToken.jsx")
 
 router.post('/login', loginController.login)
 router.post('/register', loginController.register)

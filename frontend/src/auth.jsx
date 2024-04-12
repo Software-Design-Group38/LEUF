@@ -20,11 +20,9 @@ export const AuthProvider = ({ children }) => {
             username: response.data.user.username,
             isAuthenticated: true
           })
-          console.log(authState)
-          console.log("working")
         }
 
-        sessionStorage.setItem("name", response.data.name)
+        //sessionStorage.setItem("name", response.data.name)
         return response
   
       } catch (error) {
@@ -43,7 +41,8 @@ export const AuthProvider = ({ children }) => {
           isAuthenticated: false
         })
         
-        sessionStorage.removeItem("name")
+        localStorage.removeItem("name")
+        localStorage.removeItem("username")
         return response
   
       } catch (error) {

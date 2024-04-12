@@ -1,48 +1,39 @@
-const { User } = require('../models/userModel.js')
+const { User, UserInfo } = require('../models/userModel.js')
 
 class ProfileController {
     static async updateProfile(req, res) {
         try {
-            const clientUsername = req.body.username
-            const clientName = req.body.name
-            const clientAddress1 = req.body.address1
-            const clientAddress2 = req.body.address2
-            const clientCity = req.body.city
-            const clientState = req.body.state
-            const clientZipcode = req.body.zipcode
+            const { username, data } = req.body
+            const { name, address1, address2, city, state, zipcode } = data
 
             // Validate all const if valid
-            if (!isNaN(clientName) || clientName == "" || clientName.length > 50){
+            if (!isNaN(name) || name == "" || name.length > 50){
                 return res.status(500).json({ error: "Invalid name" })
             }
-            if (clientAddress1 == "" || clientAddress2.length > 100){
+            if (address1 == "" || address1.length > 100){
                 return res.status(500).json({ error: "Invalid address 1" })
             }
-            if (clientAddress2.length > 100){
+            if (address2.length > 100){
                 return res.status(500).json({ error: "Invalid address 2" })
             }
-            if (clientCity == "" || clientCity.length > 100){
+            if (city == "" || city.length > 100){
                 return res.status(500).json({ error: "Invalid city" })
             }
-            if (clientState == "" || clientState.length != 2){
+            if (state == "" || state.length != 2){
                 return res.status(500).json({ error: "Invalid state code" })
             }
-            if (clientZipcode.length < 5 || clientZipcode.length > 9 || isNaN(clientZipcode) || clientZipcode == ""){
+            if (zipcode.length < 5 || zipcode.length > 9 || isNaN(zipcode) || zipcode == ""){
                 return res.status(500).json({ error: "Invalid zipcode" })
             }
-            // If passes all validation, set up profileInfo to prepare to update to DB
-            const profileInfo = {
-                name: clientName,
-                address1: clientAddress1,
-                address2: clientAddress2,
-                city: clientCity,
-                state: clientState,
-                zipcode: clientZipcode
-            }
+
             // Update profileInfo to clientUsername in DB and return success
-            const user = await User.findOneAndUpdate({ username: clientUsername}, { $set: { userInfo: profileInfo } })
-            console.log(profileInfo)
-            return res.status(200).json({ message: "Update successful" })
+            const user = await User.findOne({ username: username })
+            if (!user){
+                return res.status(404).json({ error: "User not found" })
+            }
+
+            await UserInfo.updateOne({ _id: user._id }, { $set: data }, { upsert: true })
+            return res.status(200).json({ message: "Profile update successful" })
         }
         catch (err) {
             res.status(500).json({ error: err.message })
@@ -52,8 +43,13 @@ class ProfileController {
     static async getProfile(req, res) {
         try {
             const user = await User.findOne({ username: req.params.username })
+            const userInfo = await UserInfo.findOne({ _id: user._id })
 
-            return res.status(200).json({ user, message: "User found" })
+            if (!userInfo){
+                return
+            }
+
+            return res.status(200).json({ userInfo, message: "User found" })
         } catch (err) {
             return res.status(500).json({error: err.message})
         }

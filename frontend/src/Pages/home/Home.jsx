@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { Typography } from '@material-tailwind/react'
+import axios from 'axios'
 
 const Home = () => {
-  const notUser = sessionStorage.getItem("name")
   const [name, setName] = useState("")
+  const username = localStorage.getItem('username')
 
   useEffect(() => {
-    const storedName = sessionStorage.getItem("name")
-    if (storedName && storedName !== "undefined"){
-        setName(storedName)
-    }
+    axios.get(`http://localhost:3001/user/${username}`)
+      .then((response) =>{
+        if (response.status === 200){
+          const user = response.data.userInfo
+          setName(user.name)
+        }
+        else{
+          console.log(`Received response: ${response}`)
+          }
+      })
+      .catch((err) =>{
+        console.error(err)
+      })
   }, [])
 
   return (
@@ -21,7 +31,7 @@ const Home = () => {
           className='hover:fill-white fill-blue-600 cursor-pointer' 
           onClick={()=>
             {
-              if (!notUser){
+              if (!username){
                 window.location.replace('/login')
               }
               else if (!name){

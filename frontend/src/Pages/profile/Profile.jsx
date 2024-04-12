@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Input, Typography, Select, Option, Button } from "@material-tailwind/react"
-import { AuthContext } from '../../auth'
 
 const states = [
     { name: "AL", fullName: "Alabama" },
@@ -65,26 +64,23 @@ const Profile = () => {
     const [state, setState] = useState("")
     const [zipcode, setZipcode] = useState("")
     const navigate = useNavigate()
-    const authState = useContext(AuthContext)
-    //console.log(authState)
+    const username = localStorage.getItem('username')
 
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          if (!authState.username){
-            //console.log('Username not defined in authState')
-            return
-          }
-
-          const response = await axios.get(`http://localhost:3001/user/${authState.username}`)
-          console.log(response)
-        } catch (err) {
-          console.error('Error fetching data:', err)
-        }
-      }
-
-      fetchData()
-    }, [authState.username])
+      axios.get(`http://localhost:3001/user/${username}`)
+        .then((response) =>{
+          const user = response.data.userInfo
+          setName(user.name)
+          setAddress1(user.address1)
+          setAddress2(user.address2)
+          setCity(user.city)
+          setState(user.state)
+          setZipcode(user.zipcode)
+        })
+        .catch((err) =>{
+          console.error(err)
+        })
+    }, [])
 
     const onSubmit = (e) => {
       e.preventDefault()
@@ -102,10 +98,10 @@ const Profile = () => {
         state: state,
         zipcode: zipcode
       }
-      axios.put('http://localhost:3001/profile', data)
+      axios.put('http://localhost:3001/profile', {username, data})
       .then(result => {
         console.log(result)
-        sessionStorage.setItem("name", name)
+        localStorage.setItem("name", name)
         navigate("/")
       })
       .catch(err => console.log(err))

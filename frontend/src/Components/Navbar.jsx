@@ -1,26 +1,42 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
 import { Menu, MenuHandler, MenuList, Typography, IconButton, MenuItem } from "@material-tailwind/react"
 import { AuthContext } from '../auth'
 
 const Navbar = () => {
-  const notUser = sessionStorage.getItem("name")
   const [name, setName] = useState("")
   const auth = useContext(AuthContext)
+  const username = localStorage.getItem("username")
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
-    const storedName = sessionStorage.getItem("name")
-    if (storedName && storedName !== "undefined"){
-        setName(storedName)
+    if (!['/login', '/signup'].includes(location.pathname)){
+        axios.get(`http://localhost:3001/user/${username}`)
+        .then((response) =>{
+            if (response.status === 200){
+                const user = response.data.userInfo
+                setName(user.name)
+            }
+            else{
+                console.log(`Received response: ${response}`)
+            }
+
+      })
+      .catch((err) =>{
+        console.error(err)
+      })
     }
-  }, [])
+  }, [location.pathname])
 
   const handleLogout = async (e) => {
     e.preventDefault()
     try {
-        const response = await auth.logout()
+        await auth.logout()
         setName("")
+        localStorage.removeItem('name')
+        localStorage.removeItem('username')
         navigate("/login")
     } catch (err) {
         console.log(err)
@@ -30,14 +46,14 @@ const Navbar = () => {
   return (
     <div className='flex h-15 px-4 fixed top-0 z-40 bg-none w-full'>
         <div className='flex justify-start items-center w-full'>
-            <div className='flex items-center cursor-pointer mr-4 hover:drop-shadow-lg p-1.5' onClick={()=>{!notUser ? window.location.replace('/login') : window.location.replace('/')}}>
+            <div className='flex items-center cursor-pointer mr-4 hover:drop-shadow-lg p-1.5' onClick={()=>{!username ? window.location.replace('/login') : window.location.replace('/')}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24">
                     <path className="fill-blue-600" d="M20 13c.55 0 1-.45 1-1s-.45-1-1-1h-1V5h1c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1h1v6H4c-.55 0-1 .45-1 1s.45 1 1 1h1v6H4c-.55 0-1 .45-1 1s.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1h-1v-6zm-8 3c-1.66 0-3-1.32-3-2.95c0-1.3.5-1.67 3-4.55c2.47 2.86 3 3.24 3 4.55c0 1.63-1.34 2.95-3 2.95" />
                 </svg>
                 <Typography variant="h2" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>
             </div>
             <ul className='flex'>
-                {(notUser || name) && (<>
+                {name && (<>
                     <li>
                         <Typography variant="h4" className="text-center cursor-pointer hover:text-blue-600" onClick={()=>{window.location.replace('/fuelform')}}>Fuel Quote Form</Typography>
                     </li>
@@ -50,7 +66,7 @@ const Navbar = () => {
         
         {/* Dropdown Menu */}
         <div className='flex justify-end items-center w-full'>
-            {notUser && (<>
+            {username && (<>
                 <Typography variant="h4" className="text-center px-2 text-blue-600">{name}</Typography>
                 <Menu>
                     <MenuHandler>
@@ -114,7 +130,7 @@ const Navbar = () => {
                     </MenuList>
                 </Menu>
             </>)}
-            {!notUser && (<>
+            {!username && (<>
                 <ul className="flex">
                     <li><Typography variant="h4" className="text-center cursor-pointer hover:text-blue-600" onClick={()=>{window.location.replace('/login')}}>Login</Typography></li>
                     <li><Typography variant="h4" className="text-center cursor-pointer hover:text-blue-600" onClick={()=>{window.location.replace('/register')}}>Register</Typography></li>

@@ -35,7 +35,7 @@ function App() {
             <Route path="/fuelform" element={<FuelForm />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Login />}/>
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
+            <Route path="/profile" element={<Profile />}/>
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>}/>
             {/*
             <Route path="/" element={<Home />} />
