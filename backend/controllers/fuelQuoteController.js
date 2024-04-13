@@ -57,7 +57,10 @@ class FuelController{
             const user = await User.findOne({ username: req.params.username })
             const fuelHistory = await FuelQuote.findOne({ _id: user._id })
             // Return history as array to frontend to prepare for formatting/display
-
+            //Format deliveryDate
+            fuelHistory.fuelInfo.forEach(item => {
+                item.date = formatDate(item.date)
+            })
             console.log(fuelHistory)
             return res.status(200).json({ fuelHistory, message: "User history found" })
         } catch (err) {
@@ -67,3 +70,10 @@ class FuelController{
 }
 
 module.exports = FuelController
+
+//Helper function to format date DD/MM/YYYY
+function formatDate(dateString) {
+    const date = new Date(dateString)
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    return formattedDate
+}
