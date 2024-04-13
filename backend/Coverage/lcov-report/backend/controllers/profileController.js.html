@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">53.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/30</span>
+                <span class='fraction'>16/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">31.03% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>9/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">53.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/30</span>
+                <span class='fraction'>16/30</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -126,21 +126,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -149,6 +146,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -160,22 +160,22 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -190,13 +190,13 @@ class ProfileController {
             const { name, address1, address2, city, state, zipcode } = data
 &nbsp;
             // Validate all const if valid
-<span class="cstat-no" title="statement not covered" >            if (!isNaN(name) || name == "" || name.length &gt; 50){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid name" })</span>
+            if (!isNaN(name) || name == "" || name.length &gt; 50){
+                return res.status(500).json({ error: "Invalid name" })
             }
-<span class="cstat-no" title="statement not covered" >            if (address1 == "" || address1.length &gt; 100){</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (address1 == "" || address1.length &gt; 100){
 <span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid address 1" })</span>
             }
-<span class="cstat-no" title="statement not covered" >            if (address2.length &gt; 100){</span>
+            if (address2.length &gt; 100){
 <span class="cstat-no" title="statement not covered" >                return res.status(500).json({ error: "Invalid address 2" })</span>
             }
 <span class="cstat-no" title="statement not covered" >            if (city == "" || city.length &gt; 100){</span>
@@ -223,18 +223,18 @@ class ProfileController {
         }
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    st</span>atic async getProfile(req, res) {
-<span class="cstat-no" title="statement not covered" >        try {</span>
-            const user = <span class="cstat-no" title="statement not covered" >await User.findOne({ username: req.params.username })</span>
-            const userInfo = <span class="cstat-no" title="statement not covered" >await UserInfo.findOne({ _id: user._id })</span>
+    static async getProfile(req, res) {
+        try {
+            const user = await User.findOne({ username: req.params.username })
+            const userInfo = await UserInfo.findOne({ _id: user._id })
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (!userInfo){</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!userInfo){
 <span class="cstat-no" title="statement not covered" >                return res.status(404).json({ error: "User info not found" })</span>
             }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            return res.status(200).json({ userInfo, message: "User found" })</span>
+            return res.status(200).json({ userInfo, message: "User found" })
         } catch (err) {
-<span class="cstat-no" title="statement not covered" >            return res.status(500).json({error: err.message})</span>
+            return res.status(500).json({error: err.message})
         }
     }
 }
@@ -247,7 +247,7 @@ module.exports = ProfileController
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-13T01:29:46.947Z
+                at 2024-04-13T02:15:54.704Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

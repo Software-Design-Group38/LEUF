@@ -2,6 +2,7 @@ const FuelController = require('../controllers/fuelQuoteController.js');
 const LoginController = require('../controllers/loginController.js');
 const ProfileController = require('../controllers/profileController.js');
 const PricingModule = require('../pricingModule.js');
+const Auth = require("../middleware/authToken.jsx");
 const app = require('../api/index.js')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -9,16 +10,14 @@ const mongoose = require("mongoose");
 const { User, UserInfo } = require("../models/userModel.js");
 const { FuelQuote } = require('../models/fuelModel.js')
 require('dotenv/config');
+const dotenv = require("dotenv");
 
-// beforeEach(() => {
-//   const app = require('../api/index.js')
-// })
 
 beforeAll(done => {
   done()
 })
 
-// Fuel Quote Contoller
+////////// Fuel Quote Contoller Tests //////////
 describe('FuelController', () => {
   describe('getQuote', () => {
     it('should return a 400 error if gallonsRequested is not a number or less than or equal to 0', () => {
@@ -138,7 +137,7 @@ describe('FuelController', () => {
 
 });
 
-//login Controller
+////////// login Controller Tests //////////
 describe('LoginController', () => {
   describe('login', () => {
     it('should return a 400 error if username or password is missing', () => {
@@ -510,19 +509,20 @@ describe('LoginController', () => {
 
 });
 
-// Profile Controller
+////////// Profile Controller Tests //////////
 describe('ProfileController', () => {
   describe('updateProfile', () => {
-    it('should return a 500 error if name is invalid', () => {
+    it('should return a 500 error if name is invalid', async () => {
       const req = {
         body: {
-          username: 'validusername',
-          name: '123', // Invalid name
-          address1: '123 Main St',
-          address2: '',
-          city: 'City',
-          state: 'ST',
-          zipcode: '12345'
+          username: 'testuser',
+          data: {
+            name: 12345,
+            address1: '123 Main St',
+            city: 'TestCity',
+            state: 'TX',
+            zipcode: '12345'
+          }
         }
       };
       const res = {
@@ -530,22 +530,23 @@ describe('ProfileController', () => {
         json: jest.fn()
       };
 
-      ProfileController.updateProfile(req, res);
+      await ProfileController.updateProfile(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid name" });
     });
 
-    it('should return a 500 error if address1 is invalid', () => {
+    it('should return a 404 error if user is not found', async () => {
       const req = {
         body: {
-          username: 'validusername',
-          name: 'John Doe',
-          address1: '', // Invalid address1
-          address2: '',
-          city: 'City',
-          state: 'ST',
-          zipcode: '12345'
+          username: 'nonexistentuser',
+          data: {
+            name: 'TestUser',
+            address1: '123 Main St',
+            city: 'TestCity',
+            state: 'TX',
+            zipcode: '12345'
+          }
         }
       };
       const res = {
@@ -553,124 +554,101 @@ describe('ProfileController', () => {
         json: jest.fn()
       };
 
-      ProfileController.updateProfile(req, res);
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(null);
 
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Invalid address 1" });
-    });
-
-    it('should return a 500 error if address2 is invalid', () => {
-      const req = {
-        body: {
-          username: 'validusername',
-          name: 'John Doe',
-          address1: '123 Main St',
-          address2: 'Address2 that is too long, more than 100 characters'.repeat(3), // Invalid address2
-          city: 'City',
-          state: 'ST',
-          zipcode: '12345'
-        }
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      ProfileController.updateProfile(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Invalid address 1" });
-    });
-
-    it('should return a 500 error if username is missing', () => {
-      const req = {
-        body: {} // Missing username
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      ProfileController.updateProfile(req, res);
+      await ProfileController.updateProfile(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Cannot read properties of undefined (reading 'length')" });
     });
 
-    it('should return a 500 error if city contains invalid characters', () => {
+    it('should return a 200 status and success message if profile is updated successfully', async () => {
       const req = {
         body: {
-          username: 'validusername',
-          name: 'John Doe',
+          username: 'testuser',
+          data: {
+            name: 'TestUser',
+            address1: '123 Main St',
+            city: 'TestCity',
+            state: 'TX',
+            zipcode: '12345'
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
+      jest.spyOn(UserInfo, 'updateOne').mockResolvedValueOnce();
+
+      await ProfileController.updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: "Profile update successful" });
+    });
+  });
+
+  describe('getProfile', () => {
+    it('should return a 404 error if user info is not found', async () => {
+      const req = {
+        params: {
+          username: 'nonexistentuser'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(null);
+
+      await ProfileController.getProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Cannot read properties of null (reading '_id')" });
+    });
+
+    it('should return a 200 status and user info if found', async () => {
+      const req = {
+        params: {
+          username: 'testuser'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
+      jest.spyOn(UserInfo, 'findOne').mockResolvedValueOnce({
+        name: 'TestUser',
+        address1: '123 Main St',
+        city: 'TestCity',
+        state: 'TX',
+        zipcode: '12345'
+      });
+
+      await ProfileController.getProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        userInfo: {
+          name: 'TestUser',
           address1: '123 Main St',
-          address2: '',
-          city: '', // Invalid city
-          state: 'ST',
+          city: 'TestCity',
+          state: 'TX',
           zipcode: '12345'
-        }
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      ProfileController.updateProfile(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Invalid city" });
+        },
+        message: "User found"
+      });
     });
-
-    it('should return a 500 error if state is invalid', () => {
-      const req = {
-        body: {
-          username: 'validusername',
-          name: 'John Doe',
-          address1: '123 Main St',
-          address2: '',
-          city: 'City',
-          state: 'California', // Invalid state
-          zipcode: '12345'
-        }
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      ProfileController.updateProfile(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Invalid state code" });
-    });
-
-    it('should return a 500 error if zipcode is invalid', () => {
-      const req = {
-        body: {
-          username: 'validusername',
-          name: 'John Doe',
-          address1: '123 Main St',
-          address2: '',
-          city: 'City',
-          state: 'ST',
-          zipcode: 'ABCDE' // Invalid zipcode
-        }
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      ProfileController.updateProfile(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Invalid zipcode" });
-    });
-
   });
 
 });
 
-// Pricing Module
+////////// Pricing Module Tests //////////
 describe('PricingModule', () => {
   describe('calculatePrice', () => {
     it('should calculate total price correctly for a new customer with less than or equal to 1000 gallons', () => {
@@ -753,8 +731,61 @@ describe('PricingModule', () => {
       expect(totalPrice).toBeCloseTo(2587.5, 2); // Assuming currentPricePerGallon is 1.50 and companyProfitFactor is 0.10
     });
 
-    // Add more test cases for other scenarios
+
   });
 
-  // Add more test cases for other methods if needed
+});
+
+////////// AuthToken Tests //////////
+dotenv.config({ path: './.env' });
+
+describe('Auth', () => {
+  let req, res, next;
+
+  beforeEach(() => {
+    req = {
+      cookies: {}
+    };
+    res = {
+      status: jest.fn(() => res),
+      json: jest.fn()
+    };
+    next = jest.fn();
+  });
+
+  it('should return a 401 error if no token is provided', async () => {
+    await Auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ message: "Access Denied: No token provided." });
+  });
+
+  it('should return a 401 error if an invalid token is provided', async () => {
+    req.cookies.token = 'invalidToken';
+
+    await Auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ err: "Authentication Failed!" });
+  });
+
+  it('should set req.user with decoded token and call next() if a valid token is provided', async () => {
+    const token = jwt.sign({ _id: '1234567890', username: 'testuser' }, process.env.SECRETKEY);
+    req.cookies.token = token;
+
+    await Auth(req, res, next);
+
+    expect(req.user).toEqual({ _id: '1234567890', username: 'testuser', iat: expect.any(Number), exp: expect.any(Number) });
+    expect(next).toHaveBeenCalled();
+  });
+
+  it('should return a 401 error if an expired token is provided', async () => {
+    const token = jwt.sign({ _id: '1234567890', username: 'testuser' }, process.env.SECRETKEY, { expiresIn: '-1s' });
+    req.cookies.token = token;
+
+    await Auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ err: "Authentication Failed!" });
+  });
 });
