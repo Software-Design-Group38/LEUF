@@ -3,6 +3,11 @@ const LoginController = require('../controllers/loginController.js');
 const ProfileController = require('../controllers/profileController.js');
 const PricingModule = require('../pricingModule.js');
 const app = require('../api/index.js')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const { User } = require("../models/userModel.js");
+require('dotenv/config');
 
 // beforeEach(() => {
 //   const app = require('../api/index.js')
@@ -12,7 +17,7 @@ beforeAll(done => {
   done()
 })
 
-//fuel Quote Contoller
+// Fuel Quote Contoller
 describe('FuelController', () => {
   describe('getQuote', () => {
     it('should return a 400 error if gallonsRequested is not a number or less than or equal to 0', () => {
@@ -63,7 +68,6 @@ describe('FuelController', () => {
     
   });
 
-  // Add more test cases as needed
 });
 
 //login Controller
@@ -194,7 +198,56 @@ describe('LoginController', () => {
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
     });
 
-    it('should return a 200 status and success message if login is successful', () => {
+    it('should return a 400 error if user does not exist', async () => {
+      const req = {
+        body: {
+          username: 'nonexistentuser',
+          password: 'validpassword'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      // Mocking database check for non-existent user
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(null);
+
+      await LoginController.login(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: "User does not exist" });
+    });
+
+    it('should return a 400 error if password does not match', async () => {
+      const req = {
+        body: {
+          username: 'validusername',
+          password: 'invalidpassword'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      // Mocking database check for user with incorrect password
+      const userWithIncorrectPassword = {
+        username: 'validusername',
+        password: 'hashedvalidpassword'
+      };
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(userWithIncorrectPassword);
+
+      // Mocking bcrypt.compare to return false for incorrect password
+      jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false);
+
+      await LoginController.login(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: "Username and password does not match" });
+    });
+
+    it('should return a 200 status and success message if login is successful', async () => {
       const req = {
         body: {
           username: 'validusername',
@@ -206,11 +259,29 @@ describe('LoginController', () => {
         json: jest.fn()
       };
 
-      LoginController.login(req, res);
+      // Mocking database check for user with correct password
+      const userWithCorrectPassword = {
+        _id: '1234567890',
+        username: 'validusername',
+        password: await bcrypt.hash('validpassword', 10)
+      };
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(userWithCorrectPassword);
+
+      // Mocking jwt.sign
+      jest.spyOn(jwt, 'sign').mockReturnValueOnce('mockedToken');
+
+      await LoginController.login(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ message: "Login successful" });
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Login successful",
+        token: 'mockedToken',
+        user: {
+          username: 'validusername'
+        }
+      });
     });
+
   });
 
   describe('register', () => {
@@ -303,6 +374,70 @@ describe('LoginController', () => {
       expect(res.json).toHaveBeenCalledWith({ error: "Invalid username" });
     });
 
+    it('should return a 409 error if user already exists', async () => {
+      const req = {
+        body: {
+          username: 'existinguser',
+          password: 'validpassword'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      // Mocking database check for existing user
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ username: 'existinguser' });
+
+      await LoginController.register(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({ message: "User already exists" });
+    });
+
+    it('should return a 200 status and success message if registration is successful', async () => {
+      const req = {
+        body: {
+          username: 'newuser',
+          password: 'newpassword'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      // Mocking database check for new user
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(null);
+      // Mocking bcrypt.hash
+      jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce('hashedPassword');
+      // Mocking User.create
+      jest.spyOn(User, 'create').mockResolvedValueOnce({ _id: '1234567890' });
+
+      await LoginController.register(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: "Signup successful" });
+    });
+
+  });
+
+  describe('logout', () => {
+    it('should clear the token cookie and return a 200 status', async () => {
+      const req = {};
+      const res = {
+        clearCookie: jest.fn(),
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await LoginController.logout(req, res);
+
+      expect(res.clearCookie).toHaveBeenCalledWith('token');
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: "Logout successful" });
+    });
+    
   });
 
 });
