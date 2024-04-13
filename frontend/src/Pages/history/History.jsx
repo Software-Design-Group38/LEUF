@@ -55,7 +55,7 @@ const History = () => {
               </tr>
             </thead>
             <tbody>
-              // map fuelQuotes from db
+              {/*map fuelQuotes from db*/}
               {fuelQuotes.map(({ requested, address, date, suggested, total }, index) => (
                 <tr key={requested} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
