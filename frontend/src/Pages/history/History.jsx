@@ -5,24 +5,6 @@ import axios from 'axios'
 
 const TABLE_HEAD = ["Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
 
-// Example tests; will receive history from DB later
-const TABLE_ROWS = [
-  {
-    requested: 24,
-    address: "12345 Test St",
-    date: "01/21/2024",
-    suggested: 2,
-    total: 48,
-  },
-  {
-    requested: 12,
-    address: "12345 Test St",
-    date: "02/13/2024",
-    suggested: 3,
-    total: 36,
-  },
-]
-
 const History = () => {
   const [fuelQuotes, setFuelQuotes] = useState([])
   const navigate = useNavigate()
@@ -36,7 +18,12 @@ const History = () => {
     else{
       axios.get(`http://localhost:3001/history/${username}`)
       .then((response) =>{
-        const info = response.data.fuelHistory.fuelInfo
+        const info = response.data.fuelHistory.fuelInfo.map(item => ({
+          ...item,
+          date: new Date(item.date).toLocaleDateString("en-US"),
+          suggestedPrice: `$${parseFloat(item.suggestedPrice)}`,
+          total: `$${parseFloat(item.total).toFixed(2)}`
+        }))
         setFuelQuotes(info)
       })
       .catch((err) =>{
@@ -73,11 +60,12 @@ const History = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(({ requested, address, date, suggested, total }, index) => (
-                <tr key={requested} className="even:bg-blue-gray-50/50">
+              {/*map fuelQuotes from db*/}
+              {fuelQuotes.map(({ galReq, address, date, suggestedPrice, total }, index) => (
+                <tr key={galReq} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {requested}
+                      {galReq}
                     </Typography>
                   </td>
                   <td className="p-4">
@@ -92,7 +80,7 @@ const History = () => {
                   </td>
                   <td className="p-4">
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {suggested}
+                      {suggestedPrice}
                     </Typography>
                   </td>
                   <td className="p-4">

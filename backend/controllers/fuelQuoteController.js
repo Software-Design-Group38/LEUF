@@ -19,16 +19,7 @@ class FuelController{
             const suggestedPrice = pricingModule.suggestedPricePerGallon
             const totalAmountDue = pricingModule.totalPrice
             
-            let fuelReq = new FuelQuote({
-                galReq: gallonsRequested,
-                address: deliveryAddress,
-                date: deliveryDate,
-                suggestedPrice: suggestedPrice,
-                total: totalAmountDue
-            })
-
             // Send fuelReq to DB to update user history
-            //await FuelQuote.updateOne({ _id: user._id }, { $push: { fuelInfo: fuelReq } }, { upsert: true })
             await FuelQuote.updateOne({
                 _id: user._id
             }, {
@@ -57,8 +48,6 @@ class FuelController{
             const user = await User.findOne({ username: req.params.username })
             const fuelHistory = await FuelQuote.findOne({ _id: user._id })
             // Return history as array to frontend to prepare for formatting/display
-
-            console.log(fuelHistory)
             return res.status(200).json({ fuelHistory, message: "User history found" })
         } catch (err) {
             return res.status(500).json({error: err.message})
