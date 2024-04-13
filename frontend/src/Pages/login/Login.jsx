@@ -33,13 +33,6 @@ const Login = () => {
       localStorage.removeItem('username')
       console.log(err)
     }
-
-    /*axios.post('http://localhost:3001/login', {username, password})
-    .then(result => {
-      console.log(result)
-      navigate("/fuelform")
-    })
-    .catch(err => console.log(err))*/
 	}
 
   const handleRegister = (e) => {

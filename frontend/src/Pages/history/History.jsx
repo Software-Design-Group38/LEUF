@@ -18,7 +18,12 @@ const History = () => {
     else{
       axios.get(`http://localhost:3001/history/${username}`)
       .then((response) =>{
-        const info = response.data.fuelHistory.fuelInfo
+        const info = response.data.fuelHistory.fuelInfo.map(item => ({
+          ...item,
+          date: new Date(item.date).toLocaleDateString("en-US"),
+          suggestedPrice: `$${parseFloat(item.suggestedPrice)}`,
+          total: `$${parseFloat(item.total).toFixed(2)}`
+        }))
         setFuelQuotes(info)
       })
       .catch((err) =>{
@@ -56,11 +61,11 @@ const History = () => {
             </thead>
             <tbody>
               {/*map fuelQuotes from db*/}
-              {fuelQuotes.map(({ requested, address, date, suggested, total }, index) => (
-                <tr key={requested} className="even:bg-blue-gray-50/50">
+              {fuelQuotes.map(({ galReq, address, date, suggestedPrice, total }, index) => (
+                <tr key={galReq} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {requested}
+                      {galReq}
                     </Typography>
                   </td>
                   <td className="p-4">
@@ -75,7 +80,7 @@ const History = () => {
                   </td>
                   <td className="p-4">
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {suggested}
+                      {suggestedPrice}
                     </Typography>
                   </td>
                   <td className="p-4">

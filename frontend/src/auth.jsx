@@ -22,14 +22,12 @@ export const AuthProvider = ({ children }) => {
           })
         }
 
-        //sessionStorage.setItem("name", response.data.name)
         return response
   
       } catch (error) {
         console.error(error)
         throw error
       }
-  
     }
   
     const logout = async () => {

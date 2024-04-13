@@ -9,55 +9,53 @@ const FuelForm = () => {
   // State variables to manage form data
   const [gallonsRequested, setGallonsRequested] = useState('')
   const [date, setDate] = useState()
-  const [fuelQuotes, setFuelQuotes] = useState([])
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
   const navigate = useNavigate()
   const username = localStorage.getItem('username')
   const name = localStorage.getItem('name')
-
-  //Add fuel quote to state to store in history
-  const addFuelQuote = (fuelQuote) => {
-    setFuelQuotes([...fuelQuotes, fuelQuote])
-  };
 
   useEffect(() => {
     if (!name){
       navigate('/profile')
     }
-  }, [navigate])
+    axios.get(`http://localhost:3001/user/${username}`)
+      .then((response) =>{
+        if (response.status === 200){
+          const user = response.data.userInfo
+          setAddress(user.address1)
+          setCity(user.city)
+          setState(user.state)
+        }
+      })
+      .catch((err) =>{
+        console.error(err)
+      })
+  }, [ username, navigate ])
   
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     
     // Calculate total amount due based on gallons requested (use pricing module when available)
-    const suggestedPricePerGallon = 2.50; // Example suggested price per gallon
-    const totalAmountDue = parseFloat(gallonsRequested) * suggestedPricePerGallon
+    // const suggestedPricePerGallon = 2.50; // Example suggested price per gallon
+    // const totalAmountDue = parseFloat(gallonsRequested) * suggestedPricePerGallon
 
     //Construct fuel quote object
     const fuelQuote = {
       gallonsRequested: parseFloat(gallonsRequested),
-      // Grab address from client profile
-      deliveryAddress: "Address1234",
+      deliveryAddress: address,
       deliveryDate: date,
-      //suggestedPrice: 2.5,
-      //totalAmountDue: totalAmountDue
     };
-    
-    //Add fuel quote to state
-    addFuelQuote(fuelQuote)
     
     axios.post('http://localhost:3001/fuelform', {username, fuelQuote})
     .then(result => {
-      //console.log(fuelQuote)
-      //console.log(result)
       navigate("/history")
     })
     .catch(err => console.log(err))
 
-    // Display total amount due 
-   // console.log(fuelQuote)
-    //console.log('Total Amount Due:', totalAmountDue)
-  };
+  }
 
   return (
     <div className='flex justify-center items-center flex-col h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]'>
@@ -81,7 +79,7 @@ const FuelForm = () => {
               label="Delivery Address"
               placeholder="0"
               readOnly
-              value={"123 Main St., City, State"} // Example client profile address
+              value={`${address}, ${city}, ${state}`} // Example client profile address
             />
             <Popover placement="bottom">
               <PopoverHandler>

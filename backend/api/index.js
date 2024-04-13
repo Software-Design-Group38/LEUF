@@ -14,18 +14,6 @@ app.get('/', (req, res) => {
   res.send("Hello")
 })
 
-/*
-db.getConnection((err) => {
-  if (err){
-    console.error("Database connection failed: " + err.stack)
-    return
-  }
-  else{
-    console.log("Connected to database")
-  }
-})*/
-
-//const dbOptions = {useNewUrlParser: true, useUnifiedTopology: true}
 mongoose.connect(process.env.DB_URI)
   .then(() => console.log('DB Connected'))
   .catch(err => console.log(err))
