@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1712970150751" clover="3.2.0">
-  <project timestamp="1712970150751" name="All files">
-    <metrics statements="165" coveredstatements="109" conditionals="73" coveredconditionals="41" methods="13" coveredmethods="7" elements="251" coveredelements="157" complexity="0" loc="165" ncloc="165" packages="5" files="9" classes="9"/>
+<coverage generated="1712971787016" clover="3.2.0">
+  <project timestamp="1712971787016" name="All files">
+    <metrics statements="165" coveredstatements="123" conditionals="73" coveredconditionals="41" methods="13" coveredmethods="8" elements="251" coveredelements="172" complexity="0" loc="165" ncloc="165" packages="5" files="9" classes="9"/>
     <package name="backend">
       <metrics statements="26" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
       <file name="pricingModule.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\pricingModule.js">
@@ -61,9 +61,9 @@
       </file>
     </package>
     <package name="backend.controllers">
-      <metrics statements="99" coveredstatements="58" conditionals="63" coveredconditionals="34" methods="7" coveredmethods="5"/>
+      <metrics statements="99" coveredstatements="72" conditionals="63" coveredconditionals="34" methods="7" coveredmethods="6"/>
       <file name="fuelQuoteController.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\controllers\fuelQuoteController.js">
-        <metrics statements="25" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="1"/>
+        <metrics statements="25" coveredstatements="24" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -73,21 +73,21 @@
         <line num="11" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="12" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="57" count="2" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
         <line num="69" count="1" type="stmt"/>
       </file>
       <file name="loginController.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\controllers\loginController.js">

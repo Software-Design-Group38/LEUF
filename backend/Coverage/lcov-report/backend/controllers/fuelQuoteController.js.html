@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">96% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/25</span>
+                <span class='fraction'>24/25</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">96% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/25</span>
+                <span class='fraction'>24/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -146,23 +146,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,29 +162,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -214,13 +214,13 @@ class FuelController{
             }
 &nbsp;
             const user = await User.findOne({ username: username })
-            const userInfo = <span class="cstat-no" title="statement not covered" >await UserInfo.findOne({_id: user._id})</span>
+            const userInfo = await UserInfo.findOne({_id: user._id})
 &nbsp;
-            const pricingModule = <span class="cstat-no" title="statement not covered" >PricingModule.calculatePrice(gallonsRequested, userInfo.state != "TX", await FuelQuote.exists({_id: user._id}))</span>
-            const suggestedPrice = <span class="cstat-no" title="statement not covered" >pricingModule.suggestedPricePerGallon</span>
-            const totalAmountDue = <span class="cstat-no" title="statement not covered" >pricingModule.totalPrice</span>
+            const pricingModule = PricingModule.calculatePrice(gallonsRequested, userInfo.state != "TX", await FuelQuote.exists({_id: user._id}))
+            const suggestedPrice = pricingModule.suggestedPricePerGallon
+            const totalAmountDue = pricingModule.totalPrice
             
-            let fuelReq = <span class="cstat-no" title="statement not covered" >new FuelQuote({</span>
+            let fuelReq = new FuelQuote({
                 galReq: gallonsRequested,
                 address: deliveryAddress,
                 date: deliveryDate,
@@ -230,7 +230,7 @@ class FuelController{
 &nbsp;
             // Send fuelReq to DB to update user history
             //await FuelQuote.updateOne({ _id: user._id }, { $push: { fuelInfo: fuelReq } }, { upsert: true })
-<span class="cstat-no" title="statement not covered" >            await FuelQuote.updateOne({</span>
+            await FuelQuote.updateOne({
                 _id: user._id
             }, {
                 $push: {
@@ -247,22 +247,22 @@ class FuelController{
 <span class="cstat-no" title="statement not covered" >            return res.status(200).json({ message: "Fuel quote submitted successfully" })</span>
         }
         catch (err) {
-<span class="cstat-no" title="statement not covered" >            console.error("Unable to submit fuel quote", err)</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(500).json({ message: "Unable to submit fuel quote" })</span>
+            console.error("Unable to submit fuel quote", err)
+            return res.status(500).json({ message: "Unable to submit fuel quote" })
         } 
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    st</span>atic async getHistory(req, res) {
-<span class="cstat-no" title="statement not covered" >        try {</span>
+    static async getHistory(req, res) {
+        try {
             // Get fuel quote history from username in database
-            const user = <span class="cstat-no" title="statement not covered" >await User.findOne({ username: req.params.username })</span>
-            const fuelHistory = <span class="cstat-no" title="statement not covered" >await FuelQuote.findOne({ _id: user._id })</span>
+            const user = await User.findOne({ username: req.params.username })
+            const fuelHistory = await FuelQuote.findOne({ _id: user._id })
             // Return history as array to frontend to prepare for formatting/display
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            console.log(fuelHistory)</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(200).json({ fuelHistory, message: "User history found" })</span>
+            console.log(fuelHistory)
+            return res.status(200).json({ fuelHistory, message: "User history found" })
         } catch (err) {
-<span class="cstat-no" title="statement not covered" >            return res.status(500).json({error: err.message})</span>
+            return res.status(500).json({error: err.message})
         }   
     }
 }
@@ -274,7 +274,7 @@ module.exports = FuelController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-13T01:02:30.687Z
+                at 2024-04-13T01:29:46.947Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

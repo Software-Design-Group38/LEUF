@@ -6,7 +6,8 @@ const app = require('../api/index.js')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const { User } = require("../models/userModel.js");
+const { User, UserInfo } = require("../models/userModel.js");
+const { FuelQuote } = require('../models/fuelModel.js')
 require('dotenv/config');
 
 // beforeEach(() => {
@@ -43,15 +44,14 @@ describe('FuelController', () => {
       expect(res.json).toHaveBeenCalledWith({ message: "At least 1 gallon must be requested" });
     });
 
-    it('should return a 200 status and success message if all inputs are valid', () => {
+    it('should return a 200 status and success message if fuel quote is submitted successfully', async () => {
       const req = {
         body: {
+          username: 'testuser',
           fuelQuote: {
             gallonsRequested: 100,
             deliveryAddress: '123 Main St',
-            deliveryDate: '2024-03-28',
-            suggestedPrice: 2.5,
-            totalAmountDue: 50
+            deliveryDate: '2024-04-01'
           }
         }
       };
@@ -60,12 +60,80 @@ describe('FuelController', () => {
         json: jest.fn()
       };
 
-      FuelController.getQuote(req, res);
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
+      jest.spyOn(UserInfo, 'findOne').mockResolvedValueOnce({ state: 'CA' });
+      jest.spyOn(FuelQuote, 'exists').mockResolvedValueOnce(false);
+      jest.spyOn(PricingModule, 'calculatePrice').mockReturnValueOnce({
+        suggestedPricePerGallon: 1.50,
+        totalPrice: 150
+      });
+
+      await FuelController.getQuote(req, res);
 
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({ message: "Fuel quote submitted successfully" });
     });
-    
+  });
+
+  describe('getHistory', () => {
+    it('should return a 500 error if an error occurs while fetching fuel history', async () => {
+      const req = {
+        params: {
+          username: 'testuser'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockRejectedValueOnce(new Error('Database error'));
+
+      await FuelController.getHistory(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+    });
+
+    it('should return a 200 status and user history if found', async () => {
+      const req = {
+        params: {
+          username: 'testuser'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
+      jest.spyOn(FuelQuote, 'findOne').mockResolvedValueOnce({
+        fuelInfo: [
+          {
+            galReq: 100,
+            address: '123 Main St',
+            date: '2024-04-01',
+            suggestedPrice: 1.50,
+            total: 150
+          }
+        ]
+      });
+
+      await FuelController.getHistory(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ fuelHistory: {
+        fuelInfo: [
+          {
+            galReq: 100,
+            address: '123 Main St',
+            date: '2024-04-01',
+            suggestedPrice: 1.50,
+            total: 150
+          }
+        ]
+      }, message: "User history found" });
+    });
   });
 
 });
@@ -437,7 +505,7 @@ describe('LoginController', () => {
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({ message: "Logout successful" });
     });
-    
+
   });
 
 });
