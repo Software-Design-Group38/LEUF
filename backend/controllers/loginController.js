@@ -16,10 +16,10 @@ class LoginController {
 
             // Conduct other validations such as username/password lengths
             if (username.length < 4 || username.length > 20){
-                return res.status(500).json({ error: "Invalid username" })
+                return res.status(400).json({ error: "Invalid username" })
             }
             if (password.length < 8 || password.length > 30){
-                return res.status(500).json({ error: "Invalid username" })
+                return res.status(400).json({ error: "Invalid username" })
             }
 
             // Check if username and password are in database; return status; user does not exist if not in DB
@@ -39,7 +39,7 @@ class LoginController {
                 })
 
                 return res.status(200).send({
-                    message: "Login successful",
+                    message: "Login Successful",
                     token,
                     user: {
                         username: user.username
@@ -47,7 +47,7 @@ class LoginController {
                 })
             }
             else{
-                return res.status(400).json({ message: "Username and password does not match" })
+                return res.status(400).json({ message: "Username and password do not match" })
             }
             
             //return res.status(200).json({ message: "Login successful" }) // Temporary return
@@ -69,16 +69,16 @@ class LoginController {
 
             // Validate username/password lengths
             if (username.length < 4 || username.length > 20){
-                return res.status(500).json({ error: "Invalid username" })
+                return res.status(400).json({ error: "Invalid username" })
             }
             if (password.length < 8 || password.length > 30){
-                return res.status(500).json({ error: "Invalid username" })
+                return res.status(400).json({ error: "Invalid username" })
             }
 
             // Check if username already exists in database, if so, return status/msg Username already exists
             const user = await User.findOne({ username: username })
             if (user) {
-                return res.status(409).json({ message: "User already exists" })
+                return res.status(409).json({ message: "Username already exists" })
             }
             const hashedPW = await bcrypt.hash(password, 10)
 
