@@ -51,7 +51,7 @@ const Login = () => {
         <div className={"w-96 p-6 shadow-lg bg-white rounded-md"}>
           <form onSubmit={create ? handleRegister : handleLogin}>
             <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="h3" color="blue-gray" className="text-center">{create ? "Sign Up" : "Login"}</Typography>
+              <Typography variant="h3" color="blue-gray" className="text-center">{create ? "Sign Up" : "Login"}</Typography>
                 <div>
                   <Input
                     type="text"
@@ -83,8 +83,8 @@ const Login = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Username must be at least 4 to 20 characters.
-                </Typography>
+                    Username must be at least 4 to 20 characters.
+                  </Typography>
                 </div>
                 <div>
                 <Input

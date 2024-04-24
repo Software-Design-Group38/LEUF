@@ -7,6 +7,7 @@ class FuelController{
         try {
             const {username, fuelQuote} = req.body    
             const {gallonsRequested, deliveryAddress, deliveryDate} = fuelQuote
+            const deliveryAddressStr = `${deliveryAddress.street}, ${deliveryAddress.city}, ${deliveryAddress.state}`
 
             if (isNaN(gallonsRequested) || gallonsRequested <= 0){
                 return res.status(400).json({ message: "At least 1 gallon must be requested" })
@@ -26,7 +27,7 @@ class FuelController{
                 $push: {
                     fuelInfo: {
                         galReq: gallonsRequested,
-                        address: deliveryAddress,
+                        address: deliveryAddressStr,
                         date: deliveryDate,
                         suggestedPrice: suggestedPrice,
                         total: totalAmountDue

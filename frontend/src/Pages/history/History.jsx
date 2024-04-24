@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Card, Typography, Button } from "@material-tailwind/react"
 import axios from 'axios'
 
-const TABLE_HEAD = ["Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
+const TABLE_HEAD = ["Order #", "Gallons Requested","Delivery Address","Delivery Date","Suggested Price / Gallon","Total Amount Due"]
 
 const History = () => {
   const [fuelQuotes, setFuelQuotes] = useState([])
@@ -30,7 +30,7 @@ const History = () => {
         console.error(err)
       })
     }
-  }, [username, navigate])
+  }, [username, navigate, name])
 
   const handleFuel = () => {
     startTransition(() => {
@@ -65,6 +65,11 @@ const History = () => {
                 <tr key={galReq} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography variant="small" color="blue-gray" className="font-normal">
+                      {index+1}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
                       {galReq}
                     </Typography>
                   </td>
@@ -93,9 +98,9 @@ const History = () => {
             </tbody>
           </table>
         </Card>
-        <a onClick={handleFuel}>
+        <div onClick={handleFuel}>
           <Button variant="gradient" className="border-none">Back to Fuel Form?</Button>
-        </a>
+        </div>
       </div>
     </div>
   )

@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div className='flex justify-center items-center flex-col bg-gradient-to-b from-[#C5CCCE] to-[#2B475F] h-screen'>
-      <Typography variant="h1" className="text-center text-blue-600"><span className="text-black">Welcome to</span> LE<span className="text-white">Ü</span>F</Typography>
+      <Typography variant="h1" className="text-center text-black">Welcome to <span className='text-blue-600'>LE<span className="text-white">Ü</span>F</span>, <span className='text-white'>{name ? `${name.split(' ')[0]}!`: ""}</span></Typography>
       <Typography variant="h3" className="text-center">Click below to get a fuel quote today.</Typography>
       <svg xmlns="http://www.w3.org/2000/svg" width="10em" height="10em" viewBox="0 0 24 24" className='hover:fill-white'>
         <path
