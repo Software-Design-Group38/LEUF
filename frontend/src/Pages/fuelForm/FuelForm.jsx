@@ -12,7 +12,11 @@ const FuelForm = () => {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [street, setStreet] = useState('')
+  const [suggestedPrice, setSuggestedPrice] = useState()
+  const [totalPrice, setTotalPrice] = useState()
   const [openPopover, setOpenPopover] = useState(false)
+  const [formComplete, setFormComplete] = useState(false)
+  const [partialComplete, setPartialComplete] = useState(false)
   const navigate = useNavigate()
   const username = localStorage.getItem('username')
   const name = localStorage.getItem('name')
@@ -39,14 +43,28 @@ const FuelForm = () => {
         console.error(err)
       })
   }, [ username, navigate, name ])
+
+  useEffect(() => {
+    const isPartial = 
+    gallonsRequested !== '' &&
+    date
+
+    const isComplete =
+      gallonsRequested !== '' &&
+      date &&
+      street !== '' &&
+      city !== '' &&
+      state !== '' &&
+      !isNaN(suggestedPrice) &&
+      !isNaN(totalPrice)
   
-  // Function to handle form submission
+    setFormComplete(isComplete)
+    setPartialComplete(isPartial)
+  }, [gallonsRequested, date, street, city, state, suggestedPrice, totalPrice])
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    // Calculate total amount due based on gallons requested (use pricing module when available)
-    // const suggestedPricePerGallon = 2.50; // Example suggested price per gallon
-    // const totalAmountDue = parseFloat(gallonsRequested) * suggestedPricePerGallon
     const address = {
       street: street,
       city: city,
@@ -58,6 +76,8 @@ const FuelForm = () => {
       gallonsRequested: parseFloat(gallonsRequested),
       deliveryAddress: address,
       deliveryDate: date,
+      suggestedPrice: suggestedPrice,
+      totalPrice: totalPrice
     }
     
     axios.post('http://localhost:3001/fuelform', {username, fuelQuote})
@@ -65,7 +85,21 @@ const FuelForm = () => {
       navigate("/history")
     })
     .catch(err => console.log(err))
+  }
 
+  const handleGetQuote = (event) => {
+    event.preventDefault()
+
+    axios.get(`http://localhost:3001/fuelform/${username}`, {
+      params: {
+        gallonsRequested: gallonsRequested
+      }
+    })
+    .then(result => {
+      setTotalPrice(result.data.totalAmountDue)
+      setSuggestedPrice(result.data.suggestedPrice)
+    })
+    .catch(err => console.log(err))
   }
 
   return (
@@ -173,21 +207,22 @@ const FuelForm = () => {
               </PopoverContent>
             </Popover>
             <Input
-              type="number"
+              type="text"
               id="suggestedPrice"
               label="Suggested Price / Gallon"
-              value="2.50" // Example suggested price per gallon
+              value={!isNaN(suggestedPrice) ? `$${parseFloat(suggestedPrice).toFixed(2)}` : ""}
               readOnly
             />
             <Input
-              type="number"
+              type="text"
               id="totalAmountDue"
               label="Total Amount Due"
               placeholder="0"
-              value={(parseFloat(gallonsRequested) * 2.50).toFixed(2)} // Example calculation
+              value={!isNaN(totalPrice) ? `$${parseFloat(totalPrice).toFixed(2)}` : ""}
               readOnly
             />
-            <Button type="submit" size="lg" className="w-full">Submit</Button>
+            <Button type="submit" size="lg" className="w-full" onClick={handleGetQuote} disabled={!partialComplete}>Get Quote</Button>
+            <Button type="submit" size="lg" className="w-full" color='blue' onClick={handleSubmit} disabled={!formComplete}>Submit</Button>
           </div>
         </form>
       </div>
