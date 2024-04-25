@@ -1,51 +1,58 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
-import { Input, Button, Typography, Alert } from "@material-tailwind/react"
+import { Input, Button, Typography } from "@material-tailwind/react"
 import { AuthContext } from '../../auth'
 
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const { login } = useContext(AuthContext)
-  const [showAlert, setShowAlert] = useState(false)
-  const navigate = useNavigate()
-
   const [create, setCreate] = useState(false)
+  const [showPW, setShowPW] = useState(true)
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate()
+  const { login } = useContext(AuthContext)
+
   const handleCreate = () => {
     setCreate(!create)
     setUsername("")
     setPassword("")
   }
 
-  const [showPW, setShowPW] = useState(true)
   const handleShowPW = () => {
     setShowPW(!showPW)
   }
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault()
     try {
-      await login(username, password)
+      const response = await axios.post('http://localhost:3001/register', { username, password })
       localStorage.setItem('username', username)
-      navigate("/")
+      navigate('/profile')
     } catch (err) {
-        if (err.response && err.response.data && err.response.data.error === "User does not exist") {
-          setShowAlert(true)
-        } else {
-          localStorage.removeItem('username')
-          console.log(err)
-        }
+      if (err.response && err.response.status === 409) {
+        setErrorMessage("Username is already registered");
+      } else {
+        setErrorMessage("Internal server error. Please try again.");
+        console.error(err);
+      }
     }
   }
-  const handleRegister = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:3001/register', { username, password })
-      .then(result => {
-        localStorage.setItem("username", username)
-        navigate("/profile")
-      })
-      .catch(err => console.log(err))
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(username, password);
+      localStorage.setItem('username', username);
+      navigate('/');
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        setErrorMessage(err.response.data.message);
+      } else {
+        setErrorMessage("Username or password is incorrect");
+        console.error(err);
+      }
+    }
   }
 
   return (
