@@ -30,12 +30,14 @@ const Login = () => {
       localStorage.setItem('username', username)
       navigate("/")
     } catch (err) {
-      localStorage.removeItem('username')
-      setShowAlert(true)
-      console.log(err)
+        if (err.response && err.response.data && err.response.data.error === "User does not exist") {
+          setShowAlert(true)
+        } else {
+          localStorage.removeItem('username')
+          console.log(err)
+        }
     }
   }
-
   const handleRegister = (e) => {
     e.preventDefault()
     axios.post('http://localhost:3001/register', { username, password })
