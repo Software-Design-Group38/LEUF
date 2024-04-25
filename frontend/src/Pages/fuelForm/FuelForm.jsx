@@ -6,15 +6,16 @@ import { format } from "date-fns"
 import { DayPicker } from "react-day-picker"
 
 const FuelForm = () => {
-  // State variables to manage form data
   const [gallonsRequested, setGallonsRequested] = useState('')
   const [date, setDate] = useState()
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
+  const [totalAmountDue, setTotalAmountDue] = useState('')
   const navigate = useNavigate()
   const username = localStorage.getItem('username')
   const name = localStorage.getItem('name')
+  const [showCalculateButton, setShowCalculateButton] = useState(true);
 
   useEffect(() => {
     if (!name){
@@ -38,11 +39,7 @@ const FuelForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    // Calculate total amount due based on gallons requested (use pricing module when available)
-    // const suggestedPricePerGallon = 2.50; // Example suggested price per gallon
-    // const totalAmountDue = parseFloat(gallonsRequested) * suggestedPricePerGallon
-
-    //Construct fuel quote object
+    // Construct fuel quote object
     const fuelQuote = {
       gallonsRequested: parseFloat(gallonsRequested),
       deliveryAddress: address,
@@ -54,8 +51,18 @@ const FuelForm = () => {
       navigate("/history")
     })
     .catch(err => console.log(err))
-
   }
+
+  // Function to handle button click
+  const handleButtonClick = () => {
+    if (showCalculateButton) {
+      const totalPrice = parseFloat(gallonsRequested) * 2.50
+      setTotalAmountDue(totalPrice)
+    } else {
+      // Submit the form option
+      handleSubmit()
+    }
+  };
 
   return (
     <div className='flex justify-center items-center flex-col h-screen bg-gradient-to-b from-[#C5CCCE] to-[#2B475F]'>
@@ -135,22 +142,13 @@ const FuelForm = () => {
               id="totalAmountDue"
               label="Total Amount Due"
               placeholder="0"
-              value={(parseFloat(gallonsRequested) * 2.50).toFixed(2)} // Example calculation
+              value={totalAmountDue}
               readOnly
             />
-            <Button type="submit" size="lg" className="w-full">Submit</Button>
+            <Button type="button" size="lg" className="w-full" onClick={handleButtonClick}>
+              {showCalculateButton ? "Calculate Price" : "Submit"}
+            </Button>
           </div>
-          {/*<div>
-            <label htmlFor="deliveryDate" className='w-1/2 font-semibold text-lg pr-1.5'>Delivery Date:</label>
-            <input
-              className='w-1/2 border rounded'
-              type="date"
-              id="deliveryDate"
-              value={deliveryDate}
-              onChange={(e) => setDeliveryDate(e.target.value)}
-              required
-            />
-            </div>*/}
         </form>
       </div>
     </div>
