@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [create, setCreate] = useState(false)
   const [showPW, setShowPW] = useState(true)
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
   const { login } = useContext(AuthContext)
 
@@ -17,6 +17,7 @@ const Login = () => {
     setCreate(!create)
     setUsername("")
     setPassword("")
+    setErrorMessage("")
   }
 
   const handleShowPW = () => {
@@ -30,40 +31,38 @@ const Login = () => {
       localStorage.setItem('username', username)
       navigate('/profile')
     } catch (err) {
-      if (err.response && err.response.status === 409) {
-        setErrorMessage("Username is already registered");
+      if (err.response && err.response.data && err.response.data.message){
+        setErrorMessage("Username is already registered")
       } else {
-        setErrorMessage("Internal server error. Please try again.");
-        console.error(err);
+        setErrorMessage("Internal server error. Please try again.")
+        console.error(err)
       }
     }
   }
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      await login(username, password);
-      localStorage.setItem('username', username);
-      navigate('/');
+      await login(username, password)
+      localStorage.setItem('username', username)
+      navigate('/')
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        setErrorMessage(err.response.data.message);
+      if (err.response && err.response.status === 404) {
+        setErrorMessage("User is not registered")
+      } else if (err.response && err.response.data && err.response.data.message) {
+        setErrorMessage("Username or password is incorrect")
       } else {
-        setErrorMessage("Username or password is incorrect");
-        console.error(err);
+        setErrorMessage("Internal server error. Please try again.")
+        console.error(err)
       }
     }
   }
+  
 
   return (
     <div className="flex justify-center items-center h-screen flex-col bg-gradient-to-b from-[#E4E7E4] to-[#2B475F]">
       <Typography variant="h1" className="text-center text-blue-600">LE<span className="text-white">Ü</span>F</Typography>
       <div className={"w-96 p-6 shadow-lg bg-white rounded-md"}>
-        {showAlert && (
-          <Alert color="red" onClose={() => setShowAlert(false)}>
-            User does not exist
-          </Alert>
-        )}
         <form onSubmit={create ? handleRegister : handleLogin}>
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h3" color="blue-gray" className="text-center">{create ? "Sign Up" : "Login"}</Typography>
@@ -81,13 +80,6 @@ const Login = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <Typography
-                variant="small"
-                color="gray"
-                className={`mt-2 flex items-center font-normal ${create ? '' : 'hidden'}`}
-              >
-                Username must be at least 4 to 20 characters.
-              </Typography>
             </div>
             <div>
               <Input
@@ -104,13 +96,6 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Typography
-                variant="small"
-                color="gray"
-                className={`mt-2 flex items-center font-normal ${create ? '' : 'hidden'}`}
-              >
-                Password must be at least 8 to 30 characters.
-              </Typography>
             </div>
             <Button
               type="submit"
@@ -119,6 +104,9 @@ const Login = () => {
             >{create ? "Sign up" : "Log in"}</Button>
           </div>
         </form>
+        {errorMessage && (
+          <div className="mt-3 text-red-600">{errorMessage}</div>
+        )}
         <div className="mt-5">
           <Typography color="gray" className="mt-4 text-center font-normal">
             {create ? (
