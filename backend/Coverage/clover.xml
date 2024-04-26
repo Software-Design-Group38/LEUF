@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1712980350377" clover="3.2.0">
-  <project timestamp="1712980350378" name="All files">
-    <metrics statements="163" coveredstatements="135" conditionals="73" coveredconditionals="51" methods="13" coveredmethods="10" elements="249" coveredelements="196" complexity="0" loc="163" ncloc="163" packages="5" files="9" classes="9"/>
+<coverage generated="1714111770617" clover="3.2.0">
+  <project timestamp="1714111770618" name="All files">
+    <metrics statements="184" coveredstatements="142" conditionals="87" coveredconditionals="58" methods="14" coveredmethods="11" elements="285" coveredelements="211" complexity="0" loc="184" ncloc="184" packages="5" files="9" classes="9"/>
     <package name="backend">
-      <metrics statements="26" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+      <metrics statements="27" coveredstatements="25" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
       <file name="pricingModule.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\pricingModule.js">
         <metrics statements="13" coveredstatements="11" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
-        <line num="3" count="8" type="stmt"/>
-        <line num="4" count="8" type="stmt"/>
-        <line num="5" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="6" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="7" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="8" count="8" type="stmt"/>
-        <line num="10" count="8" type="stmt"/>
-        <line num="12" count="8" type="stmt"/>
-        <line num="14" count="8" type="stmt"/>
-        <line num="16" count="8" type="stmt"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="5" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="12" count="7" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="16" count="7" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
       </file>
       <file name="routes.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\routes.js">
-        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -34,7 +34,8 @@
         <line num="12" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
       </file>
     </package>
     <package name="backend.api">
@@ -61,35 +62,55 @@
       </file>
     </package>
     <package name="backend.controllers">
-      <metrics statements="97" coveredstatements="76" conditionals="63" coveredconditionals="42" methods="7" coveredmethods="7"/>
+      <metrics statements="117" coveredstatements="82" conditionals="77" coveredconditionals="49" methods="8" coveredmethods="8"/>
       <file name="fuelQuoteController.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\controllers\fuelQuoteController.js">
-        <metrics statements="23" coveredstatements="22" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <metrics statements="43" coveredstatements="30" conditionals="18" coveredconditionals="12" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="11" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
-        <line num="49" count="1" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="36" count="7" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="39" count="7" type="stmt"/>
+        <line num="41" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="44" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="47" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="50" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="51" count="1" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="58" count="1" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="56" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="86" count="2" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="91" count="2" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
       </file>
       <file name="loginController.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\controllers\loginController.js">
-        <metrics statements="44" coveredstatements="38" conditionals="30" coveredconditionals="29" methods="3" coveredmethods="3"/>
+        <metrics statements="44" coveredstatements="35" conditionals="30" coveredconditionals="27" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -107,13 +128,13 @@
         <line num="26" count="2" type="stmt"/>
         <line num="27" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="28" count="1" type="stmt"/>
-        <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="1" type="cond" truecount="0" falsecount="2"/>
         <line num="32" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
         <line num="62" count="7" type="stmt"/>
         <line num="63" count="7" type="stmt"/>
         <line num="64" count="7" type="stmt"/>
@@ -124,28 +145,28 @@
         <line num="74" count="4" type="cond" truecount="4" falsecount="0"/>
         <line num="75" count="2" type="stmt"/>
         <line num="79" count="2" type="stmt"/>
-        <line num="80" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="83" count="1" type="stmt"/>
-        <line num="85" count="1" type="stmt"/>
-        <line num="90" count="1" type="stmt"/>
-        <line num="94" count="1" type="stmt"/>
+        <line num="80" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="81" count="2" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
         <line num="103" count="1" type="stmt"/>
         <line num="104" count="1" type="stmt"/>
         <line num="108" count="1" type="stmt"/>
       </file>
       <file name="profileController.js" path="C:\Users\neelj\OneDrive\Desktop\GitHub\LEUF\backend\controllers\profileController.js">
-        <metrics statements="30" coveredstatements="16" conditionals="29" coveredconditionals="9" methods="2" coveredmethods="2"/>
+        <metrics statements="30" coveredstatements="17" conditionals="29" coveredconditionals="10" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="5" count="3" type="stmt"/>
-        <line num="6" count="3" type="stmt"/>
-        <line num="7" count="3" type="stmt"/>
-        <line num="10" count="3" type="cond" truecount="5" falsecount="0"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="10" count="5" type="cond" truecount="5" falsecount="0"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="13" count="2" type="cond" truecount="3" falsecount="1"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="16" count="2" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="0" falsecount="2"/>
         <line num="17" count="0" type="stmt"/>
         <line num="19" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="20" count="0" type="stmt"/>
@@ -158,14 +179,14 @@
         <line num="32" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
-        <line num="39" count="2" type="stmt"/>
-        <line num="44" count="2" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
         <line num="48" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="49" count="0" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
         <line num="59" count="1" type="stmt"/>
       </file>
     </package>

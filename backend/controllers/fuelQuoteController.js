@@ -48,7 +48,7 @@ class FuelController{
                 return res.status(400).json({ message: "Invalid suggested price." })
             }
             if (isNaN(totalPrice)){
-                return res.status(400).json({ message: "Invalid tota price." })
+                return res.status(400).json({ message: "Invalid total price." })
             }
 
             const user = await User.findOne({ username: username })

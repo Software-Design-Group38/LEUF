@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.36% </span>
+                <span class="strong">79.54% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/44</span>
+                <span class='fraction'>35/44</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.66% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>29/30</span>
+                <span class='fraction'>27/30</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.36% </span>
+                <span class="strong">79.54% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/44</span>
+                <span class='fraction'>35/44</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -220,14 +220,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,20 +251,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -309,7 +309,7 @@ class LoginController {
                 return res.status(400).json({ message: "User does not exist" })
             }
 &nbsp;
-            <span class="missing-if-branch" title="if path not taken" >I</span>if (await bcrypt.compare(password, user.password)) {
+            if (await bcrypt.compare(password, user.password)) {
                 const token = <span class="cstat-no" title="statement not covered" >jwt.sign({_id: user._id, username: user.username}, process.env.SECRETKEY, {</span>
                     expiresIn: '24h',
                 })
@@ -328,14 +328,14 @@ class LoginController {
                 })
             }
             else{
-                return res.status(400).json({ message: "Username and password does not match" })
+<span class="cstat-no" title="statement not covered" >                return res.status(400).json({ message: "Username and password does not match" })</span>
             }
             
             //return res.status(200).json({ message: "Login successful" }) // Temporary return
         }
         catch (err) {
-<span class="cstat-no" title="statement not covered" >            console.error("Error during login:", err)</span>
-<span class="cstat-no" title="statement not covered" >            return res.status(500).json({ message: "Internal Server Error" })</span>
+            console.error("Error during login:", err)
+            return res.status(500).json({ message: "Internal Server Error" })
         }
     }
 &nbsp;
@@ -358,21 +358,21 @@ class LoginController {
 &nbsp;
             // Check if username already exists in database, if so, return status/msg Username already exists
             const user = await User.findOne({ username: username })
-            if (user) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (user) {
                 return res.status(409).json({ message: "User already exists" })
             }
-            const hashedPW = await bcrypt.hash(password, 10)
+            const hashedPW = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(password, 10)</span>
 &nbsp;
-            const newUser = await User.create({
+            const newUser = <span class="cstat-no" title="statement not covered" >await User.create({</span>
                 username: username,
                 password: hashedPW,
             })
             
-            const token = jwt.sign({_id: newUser._id}, process.env.SECRETKEY, {
+            const token = <span class="cstat-no" title="statement not covered" >jwt.sign({_id: newUser._id}, process.env.SECRETKEY, {</span>
                 expiresIn: '24h',
             })
 &nbsp;
-            return res.status(200).json({ message: "Signup successful", token })
+<span class="cstat-no" title="statement not covered" >            return res.status(200).json({ message: "Signup successful", token })</span>
         }
         catch (err) {
 <span class="cstat-no" title="statement not covered" >            return res.status(500).json({ error: err.message })</span>
@@ -394,7 +394,7 @@ module.exports = LoginController
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-13T03:52:30.298Z
+                at 2024-04-26T06:09:30.560Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

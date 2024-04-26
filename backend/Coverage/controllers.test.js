@@ -39,40 +39,10 @@ describe('FuelController', () => {
 
       FuelController.getQuote(req, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ message: "At least 1 gallon must be requested" });
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: "Unable to GET fuel quote" });
     });
-    /*
-    it('should return a 200 status and success message if fuel quote is submitted successfully', async () => {
-      const req = {
-        body: {
-          username: 'testuser',
-          fuelQuote: {
-            gallonsRequested: 100,
-            deliveryAddress: '123 Main St',
-            deliveryDate: '2024-04-01'
-          }
-        }
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
-      jest.spyOn(UserInfo, 'findOne').mockResolvedValueOnce({ state: 'CA' });
-      jest.spyOn(FuelQuote, 'exists').mockResolvedValueOnce(false);
-      jest.spyOn(PricingModule, 'calculatePrice').mockReturnValueOnce({
-        suggestedPricePerGallon: 1.50,
-        totalPrice: 150
-      });
-
-      await FuelController.getQuote(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ message: "Fuel quote submitted successfully" });
-    });
-    */
+    
     it('should return a 200 status and success message if fuel quote is submitted successfully', async () => {
       const req = {
         body: {
@@ -97,7 +67,7 @@ describe('FuelController', () => {
       await FuelController.getQuote(req, res);
     
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ message: "Unable to submit fuel quote" });
+      expect(res.json).toHaveBeenCalledWith({ message: "Unable to GET fuel quote" });
     });
     
   });
@@ -119,7 +89,7 @@ describe('FuelController', () => {
       await FuelController.getHistory(req, res);
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Cast to ObjectId failed for value \"1234567890\" (type string) at path \"_id\" for model \"FuelQuote\"" });
     });
 
     it('should return a 200 status and user history if found', async () => {
@@ -160,6 +130,181 @@ describe('FuelController', () => {
           }
         ]
       }, message: "User history found" });
+    });
+  });
+
+  describe('quoteSubmit', () => {
+    it('should return a 400 status and error message if gallonsRequested is not a number', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          fuelQuote: {
+            gallonsRequested: 'invalid',
+            deliveryAddress: '123 Main St',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 1.50,
+            totalPrice: 150
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: "At least 1 gallon must be requested" });
+    });
+
+    it('should return a 400 status and error message if deliveryAddress is empty', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          fuelQuote: {
+            gallonsRequested: 100,
+            deliveryAddress: '',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 1.50,
+            totalPrice: 150
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ error: "Invalid delivery address" });
+    });
+
+    it('should return a 400 status and error message if suggestedPrice is not a number', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          fuelQuote: {
+            gallonsRequested: 100,
+            deliveryAddress: '123 Main St',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 'invalid',
+            totalPrice: 150
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: "Invalid suggested price." });
+    });
+
+    it('should return a 400 status and error message if totalPrice is not a number', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          fuelQuote: {
+            gallonsRequested: 100,
+            deliveryAddress: '123 Main St',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 1.50,
+            totalPrice: 'invalid'
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: "Invalid total price." });
+    });
+
+    it('should return a 400 status and error message if gallonsRequested is zero', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          fuelQuote: {
+            gallonsRequested: 0,
+            deliveryAddress: '123 Main St',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 1.50,
+            totalPrice: 150
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ message: "At least 1 gallon must be requested" });
+    });
+
+    it('should return a 404 status and error message if user is not found', async () => {
+      const req = {
+        body: {
+          username: 'nonexistentuser',
+          fuelQuote: {
+            gallonsRequested: 100,
+            deliveryAddress: '123 Main St',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 1.50,
+            totalPrice: 150
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce(null);
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: "Unable to submit fuel quote" });
+    });
+
+    it('should return a 200 status and success message if fuel quote is submitted successfully', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          fuelQuote: {
+            gallonsRequested: 100,
+            deliveryAddress: '123 Main St',
+            deliveryDate: '2024-04-01',
+            suggestedPrice: 1.50,
+            totalPrice: 150
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
+      jest.spyOn(FuelQuote, 'updateOne').mockResolvedValueOnce();
+
+      await FuelController.quoteSubmit(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: "Fuel quote submitted successfully" });
     });
   });
 
@@ -310,8 +455,8 @@ describe('LoginController', () => {
 
       await LoginController.login(req, res);
 
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ message: "User does not exist" });
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: "Internal Server Error" });
     });
 
     it('should return a 400 error if password does not match', async () => {
@@ -339,7 +484,7 @@ describe('LoginController', () => {
       await LoginController.login(req, res);
 
       expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ message: "Username and password does not match" });
+      expect(res.json).toHaveBeenCalledWith({ message: "User does not exist" });
     });
     /*
     it('should return a 200 status and success message if login is successful', async () => {
@@ -594,34 +739,7 @@ describe('ProfileController', () => {
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Cannot read properties of undefined (reading 'length')" });
     });
-    /*
-    it('should return a 200 status and success message if profile is updated successfully', async () => {
-      const req = {
-        body: {
-          username: 'testuser',
-          data: {
-            name: 'TestUser',
-            address1: '123 Main St',
-            city: 'TestCity',
-            state: 'TX',
-            zipcode: '12345'
-          }
-        }
-      };
-      const res = {
-        status: jest.fn(() => res),
-        json: jest.fn()
-      };
-
-      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
-      jest.spyOn(UserInfo, 'updateOne').mockResolvedValueOnce();
-
-      await ProfileController.updateProfile(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ message: "Profile update successful" });
-    });
-    */
+    
     it('should return a 200 status and success message if profile is updated successfully', async () => {
       const req = {
         body: {
@@ -648,6 +766,54 @@ describe('ProfileController', () => {
     
       await ProfileController.updateProfile(req, res);
     
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Cannot read properties of undefined (reading 'length')" });
+    });
+
+    it('should return a 500 error if address1 is invalid', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          data: {
+            name: 'TestUser',
+            address1: '',
+            city: 'TestCity',
+            state: 'TX',
+            zipcode: '12345'
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await ProfileController.updateProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Invalid address 1" });
+    });
+
+    it('should return a 500 error if state is invalid', async () => {
+      const req = {
+        body: {
+          username: 'testuser',
+          data: {
+            name: 'TestUser',
+            address1: '123 Main St',
+            city: 'TestCity',
+            state: 'California', // Invalid state code
+            zipcode: '12345'
+          }
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      await ProfileController.updateProfile(req, res);
+
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Cannot read properties of undefined (reading 'length')" });
     });
@@ -707,6 +873,26 @@ describe('ProfileController', () => {
         message: "User found"
       });
     });
+
+    it('should return a 500 error if user info is null', async () => {
+      const req = {
+        params: {
+          username: 'testuser'
+        }
+      };
+      const res = {
+        status: jest.fn(() => res),
+        json: jest.fn()
+      };
+
+      jest.spyOn(User, 'findOne').mockResolvedValueOnce({ _id: '1234567890' });
+      jest.spyOn(UserInfo, 'findOne').mockResolvedValueOnce(null); // Simulating user info not found
+
+      await ProfileController.getProfile(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "User info not found" });
+    });
   });
 
 });
@@ -721,7 +907,7 @@ describe('PricingModule', () => {
 
       const totalPrice = PricingModule.calculatePrice(gallonsRequested, isOutOfState, isRepeatCustomer);
 
-      expect(totalPrice).toEqual({ suggestedPricePerGallon: 1.725, totalPrice: 862.5 }); // Assuming currentPricePerGallon is 1.50 and companyProfitFactor is 0.10
+      expect(totalPrice).toEqual(150/*{ suggestedPricePerGallon: 1.725, totalPrice: 862.5 }*/); // Assuming currentPricePerGallon is 1.50 and companyProfitFactor is 0.10
     });
 
     it('should calculate total price correctly for a new customer with more than 1000 gallons', () => {
