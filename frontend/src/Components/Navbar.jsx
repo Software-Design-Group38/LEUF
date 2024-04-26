@@ -12,7 +12,7 @@ const Navbar = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (!['/login', '/signup'].includes(location.pathname)){
+    if (!['/login', '/register'].includes(location.pathname)){
         axios.get(`http://localhost:3001/user/${username}`)
         .then((response) =>{
             if (response.status === 200){

@@ -6,7 +6,6 @@ import { format } from "date-fns"
 import { DayPicker } from "react-day-picker"
 
 const FuelForm = () => {
-  // State variables to manage form data
   const [gallonsRequested, setGallonsRequested] = useState('')
   const [date, setDate] = useState()
   const [city, setCity] = useState('')
@@ -85,6 +84,7 @@ const FuelForm = () => {
       navigate("/history")
     })
     .catch(err => console.log(err))
+
   }
 
   const handleGetQuote = (event) => {
