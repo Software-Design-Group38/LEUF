@@ -1,16 +1,22 @@
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const mongoose = require("mongoose")
+const { User } = require("../models/userModel.js")
+require('dotenv/config')
+
 class LoginController {
     static async login(req, res) {
         try {
-            const { username, password } = req.body
-    
-            if (!username || !password) {
-                return res.status(400).json({ message: "Username and password are required" })
-            }
-    
-            const user = await User.findOne({ username })
-            if (!user) {
-                return res.status(401).json({ message: "Username or password is incorrect" })
-            }
+          const { username, password } = req.body;
+      
+          if (!username || !password) {
+            return res.status(400).json({ message: "Username and password are required" })
+          }
+      
+          const user = await User.findOne({ username })
+          if (!user) {
+            return res.status(404).json({ message: "User is not registered" })
+          }
     
             const passwordMatch = await bcrypt.compare(password, user.password)
             if (!passwordMatch) {
